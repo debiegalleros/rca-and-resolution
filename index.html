@@ -229,69 +229,65 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
 
 /* Wide screens (landscape laptops and monitors): smaller type, use the full width, put sections side by side */
 @media screen and (min-width: 1100px) {
-  body { font-size: 15px; line-height: 1.5; }
+  body { font-size: 14px; line-height: 1.5; }
   .page { max-width: 1560px; gap: 48px; padding-block: 36px 56px;
     padding-left: max(40px, env(safe-area-inset-left, 0px)); padding-right: max(40px, env(safe-area-inset-right, 0px)); }
-  .label { font-size: 11px; }
+  .label { font-size: 10.5px; }
 
   header { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; row-gap: 12px; }
   header > * { grid-column: 1 / -1; }
-  header h1 { font-size: 54px; }
-  .role { font-size: 20px; max-width: none; }
+  header h1 { font-size: 46px; }
+  .role { font-size: 18px; max-width: none; }
   header > .lede { grid-column: 1; grid-row: 5; max-width: none; }
   header > .lede ~ .lede { grid-column: 2; grid-row: 5; }
   header > .timeline-wrap { grid-row: 6; }
-  .timeline b { font-size: 14px; }
-  .timeline li > span:last-child { font-size: 13px; }
+  .timeline b { font-size: 13px; }
+  .timeline li > span:last-child { font-size: 12px; }
 
   section { gap: 18px; }
-  section > h2 { font-size: 23px; }
-  .intro, figcaption { font-size: 13.5px; max-width: 120ch; }
-  .numbers b { font-size: 30px; }
-  .numbers span { font-size: 13.5px; }
-  .quote blockquote p { font-size: 18px; max-width: 100ch; }
+  section > h2 { font-size: 20px; }
+  .intro, figcaption { font-size: 12.5px; max-width: 120ch; }
+  .numbers b { font-size: 26px; }
+  .numbers span { font-size: 12.5px; }
+  .quote blockquote p { font-size: 16px; max-width: 110ch; }
 
   section[aria-labelledby="impact"] .apps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   section[aria-labelledby="more"] .apps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .apps { gap: 22px 32px; }
-  .app h3 { font-size: 15.5px; }
-  .app ul { font-size: 14px; gap: 4px; }
+  .app h3 { font-size: 14px; }
+  .app ul { font-size: 13px; gap: 4px; }
 
   .bars { padding: 16px 20px; gap: 7px; }
   .bar { grid-template-columns: minmax(0, 360px) minmax(0, 1fr) 2ch; }
-  .bar-label { font-size: 13.5px; }
+  .bar-label { font-size: 12.5px; }
 
-  .cases { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .cases { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   .case { padding: 18px 20px; gap: 12px; align-content: start; }
-  .case h3 { font-size: 18px; }
-  .case dl { grid-template-columns: 78px minmax(0, 1fr); gap: 7px 16px; font-size: 14px; }
-  .case dt { font-size: 10.5px; }
-  .case .results { min-width: 0; font-size: 13px; }
+  .case h3 { font-size: 16px; }
+  .case dl { grid-template-columns: 68px minmax(0, 1fr); gap: 6px 12px; font-size: 13px; }
+  .case dt { font-size: 10px; }
+  .case .results { min-width: 0; font-size: 12px; }
   .case .results th { font-size: 10px; letter-spacing: 0.03em; }
   .case .results th, .case .results td { padding: 6px 8px; }
 
   .rows { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 40px; }
   .rows li { grid-template-columns: 200px minmax(0, 1fr); gap: 4px 20px; padding-block: 11px; }
-  .rows b { font-size: 14.5px; }
-  .rows span { font-size: 14px; }
+  .rows b { font-size: 13.5px; }
+  .rows span { font-size: 13px; }
+  section[aria-labelledby="how"] .rows { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  section[aria-labelledby="how"] .rows li { grid-template-columns: minmax(0, 1fr); gap: 3px; align-content: start; }
 
-  .snippets { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
-  .snippets .snippet:last-child { grid-column: 1 / -1; }
-  .snippet { padding: 18px 20px; gap: 10px; }
-  .snippet h3 { font-size: 17px; }
-  .snippet > p { font-size: 14px; max-width: none; }
-  pre { font-size: 12.5px; line-height: 1.5; padding: 12px 14px; }
+  .snippets { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .snippet { padding: 18px 20px; gap: 10px; align-content: start; }
+  .snippet h3 { font-size: 15px; }
+  .snippet > p { font-size: 13px; max-width: none; }
+  pre { font-size: 11.5px; line-height: 1.5; padding: 12px 14px; white-space: pre-wrap; overflow-wrap: anywhere; }
 
   .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 40px; }
   .skill-row { grid-template-columns: 130px minmax(0, 1fr); padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
   .skill-row:last-child { border-bottom: 1px solid var(--rule); padding-bottom: 10px; }
-  .skill-row p { font-size: 14px; }
-  footer { font-size: 13px; max-width: none; }
-}
-
-/* Very wide screens: three case studies per row */
-@media screen and (min-width: 1440px) {
-  .cases { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .skill-row p { font-size: 13px; }
+  footer { font-size: 12px; max-width: none; }
 }
 
 @page { size: A4; margin: 14mm 14mm 16mm; }
@@ -589,16 +585,16 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
         <p class="label">SQL · reconciliation</p>
         <h3>Prove nothing is lost before removing data</h3>
         <p>Before any misfiled ad row was removed, every one had to exist under its correct account, matched on all four keys.</p>
-<pre><code>select count(*)                      as misfiled_rows,
-       count(c.entity_id)            as found_under_correct_account,
-       count(*) - count(c.entity_id) as would_be_lost
+<pre><code>select count(*) as misfiled,
+       count(c.entity_id) as found,
+       count(*) - count(c.entity_id) as lost
 from misfiled_rows m
 left join ad_entities c
-  on  c.seller_id      = m.correct_seller_id
+  on  c.seller_id = m.correct_seller_id
   and c.marketplace_id = m.marketplace_id
-  and c.entity_type    = m.entity_type
-  and c.entity_id      = m.entity_id;
-<span class="c">-- Result: 120,238 misfiled, 120,238 found, 0 would be lost</span></code></pre>
+  and c.entity_type = m.entity_type
+  and c.entity_id = m.entity_id;
+<span class="c">-- 120,238 misfiled, 120,238 found, 0 lost</span></code></pre>
       </div>
 
       <div class="snippet">
@@ -607,8 +603,9 @@ left join ad_entities c
         <p>Refused requests grouped by minute showed each outage as a burst. Each burst matched one failed schema reload.</p>
         <div class="pair">
           <p class="label">Analysis</p>
-<pre><code>select date_trunc('minute', created_at) as minute,
-       count(*)                         as refused_requests
+<pre><code>select
+  date_trunc('minute', created_at) as minute,
+  count(*) as refused
 from request_log
 where status = 503
   and path like '/rest/v1/%'
@@ -617,8 +614,10 @@ order by 1;</code></pre>
         </div>
         <div class="pair">
           <p class="label">Fix</p>
-<pre><code><span class="c">-- Give the schema reload room. User requests keep their own limits.</span>
-alter role authenticator set statement_timeout = '300s';
+<pre><code><span class="c">-- Give the schema reload room.</span>
+<span class="c">-- User requests keep their own limits.</span>
+alter role authenticator
+  set statement_timeout = '300s';
 notify pgrst, 'reload config';</code></pre>
         </div>
       </div>
@@ -629,22 +628,24 @@ notify pgrst, 'reload config';</code></pre>
         <p>A plain read returns at most 1,000 rows and no error. The fix pages through in a fixed order and stops with an error instead of returning part of a list.</p>
         <div class="pair">
           <p class="label">Before</p>
-<pre><code><span class="c">// Returns at most 1,000 rows. Nothing says the list was cut.</span>
-const { data } = await supabase.from("orders").select("*");</code></pre>
+<pre><code><span class="c">// Returns at most 1,000 rows.</span>
+<span class="c">// Nothing says the list was cut.</span>
+const { data } = await supabase
+  .from("orders").select("*");</code></pre>
         </div>
         <div class="pair">
           <p class="label">After</p>
-<pre><code>async function fetchAll(table: string, pageSize = 1000) {
-  const rows: unknown[] = [];
-  for (let from = 0; ; from += pageSize) {
+<pre><code>async function fetchAll(table: string) {
+  const size = 1000, rows: unknown[] = [];
+  for (let from = 0; ; from += size) {
     const { data, error } = await supabase
       .from(table)
       .select("*")
-      .order("id")                       <span class="c">// fixed order, so pages never overlap</span>
-      .range(from, from + pageSize - 1);
-    if (error) throw error;              <span class="c">// fail loudly, never return part</span>
+      .order("id") <span class="c">// fixed order: no overlap</span>
+      .range(from, from + size - 1);
+    if (error) throw error; <span class="c">// fail loudly</span>
     rows.push(...data);
-    if (data.length &lt; pageSize) return rows;
+    if (data.length &lt; size) return rows;
   }
 }</code></pre>
         </div>
