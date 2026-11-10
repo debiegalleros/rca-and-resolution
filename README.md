@@ -1,6 +1,6 @@
 # Debie Galleros — Root-Cause Analytics
 
-Data analytics and data science portfolio, live at **https://debiegalleros.github.io/root-cause-analytics**.
+Data analytics and data science portfolio, live at **https://debiegalleros.github.io/root-cause-analytics-portfolio**.
 
 - `index.html` — the portfolio page
 - `Debie-Galleros-Root-Cause-Analytics.pdf` — the same content as a PDF
