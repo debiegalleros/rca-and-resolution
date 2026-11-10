@@ -8,7 +8,7 @@
 <meta property="og:title" content="Debie Galleros — Root-Cause Analytics">
 <meta property="og:description" content="Portfolio of Debie Galleros: data analytics and data science. Root-cause analyses, data quality checks and AI evaluation on production data.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://debiegalleros.github.io/root-cause-analytics/">
+<meta property="og:url" content="https://debiegalleros.github.io/root-cause-analytics-portfolio/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231C58B8'/%3E%3Crect x='7' y='17' width='4' height='8' fill='white'/%3E%3Crect x='14' y='11' width='4' height='14' fill='white'/%3E%3Crect x='21' y='7' width='4' height='18' fill='white'/%3E%3C/svg%3E">
 <style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -163,6 +163,7 @@ figcaption { font-size: 15px; color: var(--muted); max-width: 70ch; }
 .links { display: flex; flex-wrap: wrap; gap: 8px 24px; }
 .links a { color: var(--accent); font-weight: 600; text-decoration: none; border-bottom: 1px solid currentColor; }
 .links a:hover { border-bottom-width: 2px; }
+.print-only { display: none; }
 .links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 
 /* Rows (AI work, investigations, method) */
@@ -226,6 +227,24 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
   pre { font-size: 12.5px; padding: 12px; }
 }
 
+/* Wide screens (landscape laptops and monitors): use the width; running text keeps a readable measure */
+@media screen and (min-width: 1100px) {
+  .page { max-width: 1240px; gap: 72px; }
+  .lede { max-width: 78ch; }
+  #impact ~ .apps, section[aria-labelledby="impact"] .apps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  section[aria-labelledby="more"] .apps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cases { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; }
+  .case { align-content: start; }
+  .case dl { grid-template-columns: 82px minmax(0, 1fr); }
+  .bar { grid-template-columns: minmax(0, 360px) minmax(0, 1fr) 2ch; }
+  .rows li { grid-template-columns: 320px minmax(0, 1fr); }
+  .rows span { max-width: 80ch; }
+  .skill-row { grid-template-columns: 200px minmax(0, 1fr); }
+  .snippets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .snippets .snippet:last-child { grid-column: 1 / -1; }
+  .quote blockquote p { max-width: 70ch; }
+}
+
 @page { size: A4; margin: 14mm 14mm 16mm; }
 @media print {
   :root {
@@ -265,6 +284,7 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
   .app h3 { font-size: 14px; }
   section.keep { break-inside: avoid; }
   .gap-before { break-before: page; margin-top: 0; }
+  .links .print-only { display: inline; }
   .space-top { margin-top: 26px; }
   .quote { padding-left: 16px; break-inside: avoid; }
   .timeline-wrap { padding: 12px 14px; gap: 10px; break-inside: avoid; }
@@ -293,7 +313,7 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
     <p class="label">Root-Cause Analytics · Data analytics and data science</p>
     <h1>Debie Galleros</h1>
     <p class="role">Data quality, root-cause analysis and AI evaluation</p>
-    <p class="links"><a href="https://github.com/debiegalleros">github.com/debiegalleros</a><a href="Debie-Galleros-Root-Cause-Analytics.pdf">PDF version</a></p>
+    <p class="links"><a href="https://github.com/debiegalleros">github.com/debiegalleros</a><a href="Debie-Galleros-Root-Cause-Analytics.pdf">PDF version</a><a class="print-only" href="https://debiegalleros.github.io/root-cause-analytics-portfolio/">debiegalleros.github.io/root-cause-analytics-portfolio</a></p>
     <p class="lede">Since May 2026 I have worked on the data behind an Amazon brand agency's platform: sales and traffic reports, advertising data, inventory, reimbursements and AI-generated product content. It runs as five apps on one shared Postgres database. I didn't build these apps. I was the only person on the team fixing their bugs: I found out why their numbers or features went wrong, submitted each fix to my manager for review, and shipped it once approved.</p>
     <div class="timeline-wrap">
       <p class="label">Timeline, 2026 · <span class="key mine">my work</span> <span class="key platform">platform changes</span></p>
