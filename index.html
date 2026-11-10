@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Debie Galleros · Root-Cause Analytics</title>
+<meta name="description" content="Portfolio of Debie Galleros: data analytics and data science. Root-cause analyses, data quality checks and AI evaluation on production data.">
+<meta property="og:title" content="Debie Galleros — Root-Cause Analytics">
+<meta property="og:description" content="Portfolio of Debie Galleros: data analytics and data science. Root-cause analyses, data quality checks and AI evaluation on production data.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://debiegalleros.github.io/root-cause-analytics/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231C58B8'/%3E%3Crect x='7' y='17' width='4' height='8' fill='white'/%3E%3Crect x='14' y='11' width='4' height='14' fill='white'/%3E%3Crect x='21' y='7' width='4' height='18' fill='white'/%3E%3C/svg%3E">
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column, like an analyst's case file; each case reads problem → analysis → finding → outcome. */
+:root {
+  --bg: #F3F5F7;
+  --surface: #FFFFFF;
+  --ink: #15202B;
+  --muted: #5A6673;
+  --rule: #D8DEE5;
+  --accent: #1C58B8;
+  --other: #A9B4C0;
+  --track: #E6EBF0;
+  --code-bg: #EDF1F5;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --body: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F151B; --surface: #161F28; --ink: #E5EAF0; --muted: #9BA7B3; --rule: #27323D;
+    --accent: #7EA7EE; --other: #5A6876; --track: #222C36; --code-bg: #111920;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F151B; --surface: #161F28; --ink: #E5EAF0; --muted: #9BA7B3; --rule: #27323D;
+  --accent: #7EA7EE; --other: #5A6876; --track: #222C36; --code-bg: #111920;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 56px 72px;
+  display: grid;
+  gap: 64px;
+}
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+p { margin: 0; }
+.label {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Header */
+header { display: grid; gap: 20px; }
+header h1 { font-size: clamp(44px, 8vw, 72px); font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+.role { font-family: var(--display); font-weight: 500; font-size: clamp(20px, 3vw, 26px); line-height: 1.25; max-width: 32ch; }
+.lede { max-width: 64ch; }
+.lede + .lede { color: var(--muted); }
+
+/* Timeline: a horizontal line with one dot per event; blue = my work, grey = platform changes */
+.timeline-wrap { display: grid; gap: 14px; padding: 18px 20px 20px; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; }
+.key::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin: 0 6px 0 10px; vertical-align: 0; }
+.key.mine::before { background: var(--accent); }
+.key.platform::before { background: var(--other); }
+.timeline { list-style: none; margin: 0; padding: 0; position: relative; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 14px; }
+.timeline::before { content: ""; position: absolute; top: 5px; left: 0; right: 0; height: 2px; background: var(--rule); }
+.timeline li { position: relative; padding-top: 22px; display: grid; gap: 3px; align-content: start; min-width: 0; }
+.timeline li::before { content: ""; position: absolute; top: 0; left: 0; width: 12px; height: 12px; border-radius: 50%; background: var(--other); box-shadow: 0 0 0 3px var(--surface); }
+.timeline li.mine::before { background: var(--accent); }
+.timeline .when { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--muted); }
+.timeline b { font-size: 15px; font-weight: 600; line-height: 1.3; }
+.timeline li > span:last-child { font-size: 14px; line-height: 1.4; color: var(--muted); }
+
+/* Numbers */
+.numbers {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.numbers div { padding: 18px 16px 18px 0; display: grid; gap: 4px; align-content: start; }
+.numbers div + div { padding-left: 16px; border-left: 1px solid var(--rule); }
+.numbers b {
+  font-family: var(--display); font-weight: 700; font-size: 36px; line-height: 1;
+  font-variant-numeric: tabular-nums; color: var(--accent);
+}
+.numbers span { font-size: 15px; color: var(--muted); line-height: 1.35; }
+
+section { display: grid; gap: 24px; }
+section > h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; }
+.intro { max-width: 64ch; color: var(--muted); }
+
+/* Root-cause bars */
+figure { margin: 0; display: grid; gap: 14px; }
+.bars { display: grid; gap: 10px; padding: 20px; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; }
+.bar { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr) 2ch; gap: 16px; align-items: center; }
+.bar-label { font-size: 15px; line-height: 1.3; }
+.bar-track { height: 14px; background: var(--track); border-radius: 3px; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--other); border-radius: 3px; }
+.bar.hot .bar-fill { background: var(--accent); }
+.bar.hot .bar-label { font-weight: 600; }
+.bar-value { font-family: var(--mono); font-size: 13px; text-align: right; font-variant-numeric: tabular-nums; }
+figcaption { font-size: 15px; color: var(--muted); max-width: 70ch; }
+
+/* Cases */
+.cases { display: grid; gap: 20px; }
+.case {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 24px;
+  display: grid;
+  gap: 16px;
+  break-inside: avoid;
+}
+.case-head { display: grid; gap: 6px; }
+.case h3 { font-size: 22px; font-weight: 700; line-height: 1.2; }
+.case dl { margin: 0; display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 10px 20px; }
+.case dt { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding-top: 4px; }
+.case dd { margin: 0; min-width: 0; }
+.case dd.result { font-weight: 600; }
+.case dd.result span { font-weight: 400; color: var(--muted); }
+
+/* Manager quote */
+.quote { padding: 4px 0 4px 24px; border-left: 3px solid var(--accent); }
+.quote blockquote { margin: 0; }
+.quote blockquote p { font-family: var(--display); font-weight: 500; font-size: clamp(19px, 2.4vw, 23px); line-height: 1.4; max-width: 60ch; text-wrap: pretty; }
+
+/* Project */
+.project { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 24px; display: grid; gap: 16px; break-inside: avoid; }
+.project h3 { font-size: 24px; font-weight: 700; line-height: 1.2; }
+.project > p { max-width: 70ch; }
+.project .note { color: var(--muted); font-size: 15px; }
+.table-wrap { overflow-x: auto; min-width: 0; }
+.results { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 15px; font-variant-numeric: tabular-nums; }
+.results th, .results td { text-align: right; padding: 8px 10px; border-bottom: 1px solid var(--rule); }
+.results th:first-child, .results td:first-child { text-align: left; padding-left: 0; }
+.results th { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); vertical-align: bottom; }
+.results tr.served td { font-weight: 600; }
+.results td.win { font-weight: 600; color: var(--accent); }
+.links { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+.links a { color: var(--accent); font-weight: 600; text-decoration: none; border-bottom: 1px solid currentColor; }
+.links a:hover { border-bottom-width: 2px; }
+.links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+/* Rows (AI work, investigations, method) */
+.rows { margin: 0; padding: 0; list-style: none; display: grid; border-top: 1px solid var(--rule); }
+.rows li { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 4px 28px; padding-block: 16px; border-bottom: 1px solid var(--rule); break-inside: avoid; }
+.rows b { font-weight: 600; font-size: 17px; line-height: 1.4; }
+.rows span { min-width: 0; font-size: 16px; }
+
+/* Code */
+.snippets { display: grid; gap: 28px; }
+.snippet {
+  display: grid; gap: 12px; min-width: 0;
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 24px;
+  break-inside: avoid;
+}
+.snippet h3 { font-size: 20px; font-weight: 700; }
+.snippet > p { max-width: 68ch; }
+.pair { display: grid; gap: 6px; min-width: 0; }
+pre {
+  margin: 0; overflow-x: auto; background: var(--code-bg); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 14px 16px; font-family: var(--mono); font-size: 13.5px; line-height: 1.6; color: var(--ink);
+}
+pre .c { color: var(--muted); }
+
+/* More fixes */
+.apps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 32px; }
+.app { display: grid; gap: 10px; align-content: start; break-inside: avoid; min-width: 0; }
+.app h3 { font-size: 18px; font-weight: 700; padding-bottom: 8px; border-bottom: 2px solid var(--accent); }
+.app ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 16px; }
+.app li::marker { color: var(--muted); }
+
+/* Skills */
+.skills { display: grid; gap: 14px; }
+.skill-row { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 16px; align-items: baseline; padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
+.skill-row:last-child { border-bottom: 0; padding-bottom: 0; }
+.skill-row p { font-size: 16px; }
+
+.gap-before { margin-top: 40px; }
+
+footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; color: var(--muted); max-width: 70ch; }
+
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  .page { padding-block: 32px 48px; gap: 48px; }
+  .numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .numbers div:nth-child(3) { padding-left: 0; border-left: 0; }
+  .numbers div:nth-child(n+3) { border-top: 1px solid var(--rule); }
+  .bars { padding: 16px; }
+  .bar { grid-template-columns: minmax(0, 1fr) 2ch; gap: 6px 12px; }
+  .bar-label { grid-column: 1 / -1; }
+  .case, .snippet, .project { padding: 18px; }
+  .timeline { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .timeline::before { top: 0; bottom: 0; left: 5px; right: auto; width: 2px; height: auto; }
+  .timeline li { padding-top: 0; padding-left: 26px; }
+  .timeline li::before { top: 3px; }
+  .case dl { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .case dd { margin-bottom: 10px; }
+  .rows li { grid-template-columns: minmax(0, 1fr); }
+  .apps { grid-template-columns: minmax(0, 1fr); }
+  .skill-row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  pre { font-size: 12.5px; padding: 12px; }
+}
+
+@page { size: A4; margin: 14mm 14mm 16mm; }
+@media print {
+  :root {
+    --bg: #FFFFFF; --surface: #FFFFFF; --ink: #15202B; --muted: #55616E; --rule: #D8DEE5;
+    --accent: #1C58B8; --other: #A9B4C0; --track: #EDF1F5; --code-bg: #F1F4F7;
+    color-scheme: light;
+  }
+  body { font-size: 10pt; line-height: 1.45; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { padding: 0; max-width: none; gap: 26px; }
+  header { gap: 12px; }
+  header h1 { font-size: 44px; }
+  .role { font-size: 19px; }
+  .lede { max-width: 92ch; }
+  section { gap: 14px; }
+  section > h2 { font-size: 20px; break-after: avoid; }
+  .intro, figcaption { font-size: 9.5pt; }
+  .numbers div { padding-block: 12px; }
+  .numbers b { font-size: 26px; }
+  .numbers span { font-size: 9.5pt; }
+  figure { break-inside: avoid; }
+  .bars { padding: 14px; gap: 7px; }
+  .bar-label { font-size: 9.5pt; }
+  .bar-track { height: 10px; }
+  .bar-value { font-size: 9pt; }
+  .cases { gap: 12px; }
+  .case { padding: 12px 16px; gap: 8px; }
+  .case h3 { font-size: 15px; }
+  .case dl { gap: 5px 16px; }
+  .case dt { font-size: 9px; padding-top: 2px; }
+  .rows li { padding-block: 8px; }
+  .rows b { font-size: 10.5pt; }
+  .rows span, .app ul, .skill-row p { font-size: 9.5pt; }
+  .snippets { gap: 14px; }
+  .snippet { padding: 12px 16px; gap: 8px; }
+  .snippet h3 { font-size: 15px; }
+  pre { white-space: pre-wrap; font-size: 8pt; line-height: 1.45; padding: 8px 10px; }
+  .app h3 { font-size: 14px; }
+  section.keep { break-inside: avoid; }
+  .gap-before { break-before: page; margin-top: 0; }
+  .space-top { margin-top: 26px; }
+  .quote { padding-left: 16px; break-inside: avoid; }
+  .timeline-wrap { padding: 12px 14px; gap: 10px; break-inside: avoid; }
+  .timeline { gap: 10px; }
+  .timeline .when { font-size: 8pt; }
+  .timeline b { font-size: 9.5pt; }
+  .timeline li > span:last-child { font-size: 8.5pt; }
+  .quote blockquote p { font-size: 12.5pt; }
+  .project { padding: 12px 16px; gap: 8px; }
+  .project h3 { font-size: 15px; }
+  .project .note { font-size: 9.5pt; }
+  .results { min-width: 0; font-size: 9pt; }
+  .results th { font-size: 8px; }
+  .results th, .results td { padding: 4px 8px; }
+  .project .links a::after { content: " (" attr(href) ")"; font-weight: 400; color: var(--muted); }
+  .skills { gap: 7px; }
+  .skill-row { padding-bottom: 7px; }
+  .skill-row .label { font-size: 9px; }
+  footer { font-size: 9pt; padding-top: 12px; break-inside: avoid; }
+}
+</style>
+
+<div class="page">
+
+  <header>
+    <p class="label">Root-Cause Analytics · Data analytics and data science</p>
+    <h1>Debie Galleros</h1>
+    <p class="role">Data quality, root-cause analysis and AI evaluation</p>
+    <p class="links"><a href="https://github.com/debiegalleros">github.com/debiegalleros</a><a href="Debie-Galleros-Root-Cause-Analytics.pdf">PDF version</a></p>
+    <p class="lede">Since May 2026 I have worked on the data behind an Amazon brand agency's platform: sales and traffic reports, advertising data, inventory, reimbursements and AI-generated product content. It runs as five apps on one shared Postgres database. I didn't build these apps. I was the only person on the team fixing their bugs: I found out why their numbers or features went wrong, submitted each fix to my manager for review, and shipped it once approved.</p>
+    <div class="timeline-wrap">
+      <p class="label">Timeline, 2026 · <span class="key mine">my work</span> <span class="key platform">platform changes</span></p>
+      <ol class="timeline">
+        <li class="platform"><span class="when">Mar – May</span><b>The apps are built</b><span>Another team builds the five apps.</span></li>
+        <li class="mine"><span class="when">May</span><b>I start on bugs</b><span>I handle the first bug reports from users as the apps go into first use.</span></li>
+        <li class="mine"><span class="when">Jun</span><b>AI model retirements</b><span>Unprompted, I spot retirements on the provider's schedule and raise a fix early.</span></li>
+        <li class="platform"><span class="when">Jul</span><b>First database migration</b><span>Airtable to Supabase. Database headers stop matching the screens, and fixes pile up.</span></li>
+        <li class="mine"><span class="when">Aug</span><b>Move to GitHub and Claude Code</b><span>From Lovable's AI editor to Claude Code and GitHub, for more reliable fixes and a documented record of every change.</span></li>
+        <li class="platform"><span class="when">Sep</span><b>Second migration starts</b><span>Still under way, so new bugs keep coming.</span></li>
+        <li class="mine"><span class="when">Nov</span><b>612 tickets closed</b><span>Across all five apps, as the only person fixing bugs.</span></li>
+      </ol>
+    </div>
+    <p class="lede">Most cases started with a number that looked wrong. I traced it through SQL, request logs and the code that wrote it, measured how far it reached, and shipped the fix. Until July I made fixes through Lovable's AI editor. In August I moved to Claude Code and GitHub pull requests, which gave more reliable fixes and a documented, reviewable record of every change. Either way, I checked the AI's findings against the live database before anything went out.</p>
+  </header>
+
+  <div class="numbers" role="list">
+    <div role="listitem"><b>612</b><span>tickets closed since May</span></div>
+    <div role="listitem"><b>149</b><span>fixes merged, of 171 pull requests since Aug 6</span></div>
+    <div role="listitem"><b>1,848</b><span>failed requests traced to one setting</span></div>
+    <div role="listitem"><b>2,741</b><span>labelled AI review notes I tested one fix on</span></div>
+  </div>
+
+  <figure class="quote">
+    <blockquote><p>"Really impressed with your deep-diving the state of the API source from Anthropic. You are using a higher level of strategic analysis now that you've been in the trenches. I am convinced that once you are able to take a breather from tactical operations, you will have insights that will allow you to make great contributions to our software strategy."</p></blockquote>
+    <figcaption>My manager, Jun 20, in my second month of bug fixing, replying to my own analysis of Anthropic's model retirements, which no bug report had asked for</figcaption>
+  </figure>
+
+  <section class="keep" aria-labelledby="impact">
+    <h2 id="impact">How it helped</h2>
+    <p class="intro">What changed for the company and its clients. Business figures are left out for confidentiality.</p>
+    <div class="apps">
+      <div class="app">
+        <h3>Clients</h3>
+        <ul>
+          <li>Profit and loss in the client portal counts credits received outside Amazon</li>
+          <li>Brands selling in the US, Canada and Mexico see each country's own numbers</li>
+          <li>Customer loyalty trends read one storefront at a time</li>
+        </ul>
+      </div>
+      <div class="app">
+        <h3>Operations and analytics teams</h3>
+        <ul>
+          <li>Agents no longer upload reports by hand or keep their own Excel sheets, which saves time and money and keeps the system up to date</li>
+          <li>Lists and totals are complete, or show an error, in all five apps</li>
+          <li>The cause of 37 outages in 12 days is fixed</li>
+          <li>Wrong-account ad uploads are blocked, and 120,238 misfiled rows were kept with zero loss</li>
+          <li>Every reimbursement claim can be found, with case actions and a claim-type filter</li>
+        </ul>
+      </div>
+      <div class="app">
+        <h3>AI features</h3>
+        <ul>
+          <li>Two June model retirements raised for a fix before the retirement date</li>
+          <li>The next retirement forecast in June and handled three weeks early, before anything broke</li>
+          <li>Video generation working again after Google retired its model</li>
+          <li>The AI reviewer re-runs fails its own notes contradict; 630 had been missed</li>
+          <li>Finished research results stay visible when the AI provider refuses calls</li>
+        </ul>
+      </div>
+      <div class="app">
+        <h3>Management</h3>
+        <ul>
+          <li>Bug fixing for all five apps covered by one person, with every fix reviewed before release</li>
+          <li>A weekly fix count with its undercount found and corrected</li>
+          <li>Daily status reports and a weekly report on every ticket</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="causes">
+    <h2 id="causes">What I found most often</h2>
+    <figure>
+      <div class="bars" role="list" aria-label="Root causes across 39 tickets">
+        <div class="bar" role="listitem"><span class="bar-label">Leftovers from an old system or database move</span><div class="bar-track"><div class="bar-fill" style="width: 100%"></div></div><span class="bar-value">6</span></div>
+        <div class="bar hot" role="listitem"><span class="bar-label">Lists silently cut at 1,000 rows</span><div class="bar-track"><div class="bar-fill" style="width: 83.3%"></div></div><span class="bar-value">5</span></div>
+        <div class="bar hot" role="listitem"><span class="bar-label">Failures shown as empty, zero or success</span><div class="bar-track"><div class="bar-fill" style="width: 83.3%"></div></div><span class="bar-value">5</span></div>
+        <div class="bar" role="listitem"><span class="bar-label">Generic errors hiding the real reason</span><div class="bar-track"><div class="bar-fill" style="width: 83.3%"></div></div><span class="bar-value">5</span></div>
+        <div class="bar" role="listitem"><span class="bar-label">Rules applied to the wrong records</span><div class="bar-track"><div class="bar-fill" style="width: 83.3%"></div></div><span class="bar-value">5</span></div>
+        <div class="bar" role="listitem"><span class="bar-label">One failure stopping a whole job</span><div class="bar-track"><div class="bar-fill" style="width: 66.7%"></div></div><span class="bar-value">4</span></div>
+        <div class="bar" role="listitem"><span class="bar-label">Database or server limits</span><div class="bar-track"><div class="bar-fill" style="width: 66.7%"></div></div><span class="bar-value">4</span></div>
+        <div class="bar" role="listitem"><span class="bar-label">Hard-coded text or lists</span><div class="bar-track"><div class="bar-fill" style="width: 50%"></div></div><span class="bar-value">3</span></div>
+      </div>
+      <figcaption>Root causes in the 39 tickets I wrote up from Sep 29 to Nov 11, by number of tickets. One ticket can have more than one cause. The most common one traces back to the platform's migrations. The two highlighted causes made wrong data look right: nothing on screen said a list was cut short or a request had failed.</figcaption>
+    </figure>
+  </section>
+
+  <section aria-labelledby="cases">
+    <h2 id="cases">Selected analyses</h2>
+    <div class="cases">
+
+      <article class="case">
+        <div class="case-head">
+          <p class="label">Log analysis · all five apps</p>
+          <h3>Outages that hit every app at once</h3>
+        </div>
+        <dl>
+          <dt>Problem</dt>
+          <dd>All five apps sometimes refused every request for a few seconds to five minutes, with "503 Service Unavailable" and no clear trigger.</dd>
+          <dt>Analysis</dt>
+          <dd>I pulled 12 days of request logs, grouped the refused requests by minute, and lined each burst up against the database API's own log.</dd>
+          <dt>Finding</dt>
+          <dd>37 outages and 1,848 refused requests, 15 of the outages on a single day. Every outage minute had one failed schema reload, cut off by an 8-second limit. The slowest reload took 13.3 seconds.</dd>
+          <dt>Outcome</dt>
+          <dd class="result">Raised that one limit to 300 seconds. <span>Live since Nov 5. Limits on user requests stayed the same.</span></dd>
+        </dl>
+      </article>
+
+      <article class="case">
+        <div class="case-head">
+          <p class="label">AI evaluation · content review</p>
+          <h3>Testing an AI reviewer on all its past answers</h3>
+        </div>
+        <dl>
+          <dt>Problem</dt>
+          <dd>An AI step that reviews generated product copy failed text while its own note said the text "actually complies".</dd>
+          <dt>Analysis</dt>
+          <dd>A re-run rule caught these contradictions only when the note used one of a fixed list of phrases. I measured that rule against every saved review since it started. Keyword counts swung from about 125 to 1,800 depending on the pattern, so I didn't rely on them.</dd>
+          <dt>Finding</dt>
+          <dd>927 saved fails said in their own note that the text passed. 630 of them were never re-run, because the phrase list missed their wording.</dd>
+          <dt>Outcome</dt>
+          <dd class="result">Replaced the phrase list with a short AI check that reads what each failing note concludes. <span>Tested on all 2,741 labelled review notes with the labels hidden, then verified live.</span></dd>
+        </dl>
+        <div class="table-wrap">
+          <table class="results">
+            <thead><tr><th>Test on 2,741 labelled notes</th><th>Old phrase list</th><th>New AI check</th></tr></thead>
+            <tbody>
+              <tr><td>Contradictions caught, of 1,425</td><td>272 (19%)</td><td class="win">1,308 (92%)</td></tr>
+              <tr><td>Real fails wrongly re-run, of 1,174</td><td>90 (8%)</td><td class="win">47 (4%)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-head">
+          <p class="label">Data reconciliation · report uploads</p>
+          <h3>Ad data filed under the wrong account</h3>
+        </div>
+        <dl>
+          <dt>Problem</dt>
+          <dd>Advertising bulk files for one seller account appeared under another, mixing their ad data.</dd>
+          <dt>Analysis</dt>
+          <dd>I compared the account named in each of the 279 past file names with the account it was filed under. Then I matched every suspect row against its correct account on four keys.</dd>
+          <dt>Finding</dt>
+          <dd>5 imports contradicted their file names. Four of them had put 120,238 rows under the wrong account, and every one of those rows already existed under the right one.</dd>
+          <dt>Outcome</dt>
+          <dd class="result">Misfiled rows backed up, with zero data loss. <span>A file-name check now blocks wrong uploads. Run on the history, it passed all 274 correct ones and caught the 5 wrong ones.</span></dd>
+        </dl>
+      </article>
+
+      <article class="case">
+        <div class="case-head">
+          <p class="label">Data completeness · all five apps</p>
+          <h3>Lists that silently stopped at 1,000 rows</h3>
+        </div>
+        <dl>
+          <dt>Problem</dt>
+          <dd>Lists and totals came back incomplete with no error: groups missing members, report rows gone, claims missing from search.</dd>
+          <dt>Analysis</dt>
+          <dd>I swept the database reads in all five apps for any that could return more than 1,000 rows. In the largest app that meant 158 server functions and 297 database function calls.</dd>
+          <dt>Finding</dt>
+          <dd>The database API returns at most 1,000 rows per request, and the code treated that as the whole list. Reads without a fixed sort order also overlapped between pages: in one claims list, about 1 in 5 items never appeared.</dd>
+          <dt>Outcome</dt>
+          <dd class="result">Live in all five apps since Oct 21. <span>One shared reader returns every row or raises an error, and a CI check blocks new reads that skip it.</span></dd>
+        </dl>
+      </article>
+
+      <article class="case">
+        <div class="case-head">
+          <p class="label">Segmentation · multi-country sellers</p>
+          <h3>Numbers from the wrong country</h3>
+        </div>
+        <dl>
+          <dt>Problem</dt>
+          <dd>For brands selling in the US, Canada and Mexico, some pages counted other countries' figures as US numbers.</dd>
+          <dt>Analysis</dt>
+          <dd>Before changing anything, I measured on live data which pages actually showed wrong numbers. After the change, I compared each report's output old against new, in both directions.</dd>
+          <dt>Finding</dt>
+          <dd>The wrong pages read by account and ignored the marketplace. Some stock views quietly defaulted to the US.</dd>
+          <dt>Outcome</dt>
+          <dd class="result">Affected pages in all five apps follow the marketplace picker. <span>US-only reports now say so, and every other report kept exactly the same numbers.</span></dd>
+        </dl>
+      </article>
+
+      <article class="case">
+        <div class="case-head">
+          <p class="label">Data collection · GitHub change audit</p>
+          <h3>A weekly count of fixes that was quietly wrong</h3>
+        </div>
+        <dl>
+          <dt>Problem</dt>
+          <dd>Every Monday the team needed a count of the fixes made to its server functions across all the codebases, recorded in a tracking table and reported onward.</dd>
+          <dt>Analysis</dt>
+          <dd>Each week I pulled every merged pull request from GitHub, read its code changes, and recorded each verified fix with the tables and apps it touched. When the numbers looked off, I checked how they were collected.</dd>
+          <dt>Finding</dt>
+          <dd>Two measurement errors. The audit covered four codebases when there were five, so every earlier week was undercounted. Sorting pull requests by their titles also missed real fixes, 5 in one week, because most of them mixed features and fixes.</dd>
+          <dt>Outcome</dt>
+          <dd class="result">Fixed the scope and re-swept the earlier weeks, which recovered 4 missed fixes. <span>Classification now reads each change, not its title. Commit authors didn't show who drove a change, so I tested another signal: it matched 6 of 6 known cases and 0 of 18 others.</span></dd>
+        </dl>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="keep space-top" aria-labelledby="ai">
+    <h2 id="ai">AI models and pipelines</h2>
+    <ul class="rows">
+      <li><b>Forecast the June model retirement (Jun)</b><span>No bug report asked for this. I read Anthropic's model retirement schedule, saw that two models the apps still called would retire on Jun 15, and alerted the team and raised a fix before the retirement date. A retirement like this reaches the AI features in four of the five apps: 72 of 347 server functions today, 48 of them in the research and content app. Every hard-coded model ID and config table moved to a supported model, with clear error messages, automatic retries and an AI status badge. I also noted when the next model would retire: Sep 29.</span></li>
+      <li><b>Acted on my own forecast, three weeks early (Sep)</b><span>In early September, 10 pipeline stages and 32 files in the largest app still used the model I had flagged in June for retirement on Sep 29. I moved all four apps that used it on Sep 8, before anything broke.</span></li>
+      <li><b>Found a model name that didn't exist</b><span>The same check found a default model ID that was never released, left by a bad automated edit. No caller used it yet, so I fixed it before one did.</span></li>
+      <li><b>Video generation after Google retired its model</b><span>Google shut down its video model on Oct 22, and every video feature failed with a generic error. I moved video generation to Google's new model and made the screens show the real reason.</span></li>
+      <li><b>Research results hidden by a provider refusal</b><span>When the AI provider refused calls because the account ran out of credit, a keyword research tool marked finished analyses as failed and hid them. The results were intact. I made temporary refusals leave the work as it was.</span></li>
+    </ul>
+  </section>
+
+  <section class="gap-before" aria-labelledby="code">
+    <h2 id="code">SQL and code from my work</h2>
+    <p class="intro">Claude Code wrote first drafts, and I reviewed each change before it went into a pull request. These examples show the patterns behind three of the analyses above, rewritten as short generic code. The real code belongs to the company, so none of it is copied here.</p>
+    <div class="snippets">
+
+      <div class="snippet">
+        <p class="label">SQL · reconciliation</p>
+        <h3>Prove nothing is lost before removing data</h3>
+        <p>Before any misfiled ad row was removed, every one had to exist under its correct account, matched on all four keys.</p>
+<pre><code>select count(*)                      as misfiled_rows,
+       count(c.entity_id)            as found_under_correct_account,
+       count(*) - count(c.entity_id) as would_be_lost
+from misfiled_rows m
+left join ad_entities c
+  on  c.seller_id      = m.correct_seller_id
+  and c.marketplace_id = m.marketplace_id
+  and c.entity_type    = m.entity_type
+  and c.entity_id      = m.entity_id;
+<span class="c">-- Result: 120,238 misfiled, 120,238 found, 0 would be lost</span></code></pre>
+      </div>
+
+      <div class="snippet">
+        <p class="label">SQL · log analysis and fix</p>
+        <h3>Find the outages, then fix the setting</h3>
+        <p>Refused requests grouped by minute showed each outage as a burst. Each burst matched one failed schema reload.</p>
+        <div class="pair">
+          <p class="label">Analysis</p>
+<pre><code>select date_trunc('minute', created_at) as minute,
+       count(*)                         as refused_requests
+from request_log
+where status = 503
+  and path like '/rest/v1/%'
+group by 1
+order by 1;</code></pre>
+        </div>
+        <div class="pair">
+          <p class="label">Fix</p>
+<pre><code><span class="c">-- Give the schema reload room. User requests keep their own limits.</span>
+alter role authenticator set statement_timeout = '300s';
+notify pgrst, 'reload config';</code></pre>
+        </div>
+      </div>
+
+      <div class="snippet">
+        <p class="label">TypeScript · data completeness</p>
+        <h3>Read every row, or fail loudly</h3>
+        <p>A plain read returns at most 1,000 rows and no error. The fix pages through in a fixed order and stops with an error instead of returning part of a list.</p>
+        <div class="pair">
+          <p class="label">Before</p>
+<pre><code><span class="c">// Returns at most 1,000 rows. Nothing says the list was cut.</span>
+const { data } = await supabase.from("orders").select("*");</code></pre>
+        </div>
+        <div class="pair">
+          <p class="label">After</p>
+<pre><code>async function fetchAll(table: string, pageSize = 1000) {
+  const rows: unknown[] = [];
+  for (let from = 0; ; from += pageSize) {
+    const { data, error } = await supabase
+      .from(table)
+      .select("*")
+      .order("id")                       <span class="c">// fixed order, so pages never overlap</span>
+      .range(from, from + pageSize - 1);
+    if (error) throw error;              <span class="c">// fail loudly, never return part</span>
+    rows.push(...data);
+    if (data.length &lt; pageSize) return rows;
+  }
+}</code></pre>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="keep" aria-labelledby="diag">
+    <h2 id="diag">More investigations</h2>
+    <p class="intro">Not every investigation ended in my own pull request. In these, the lead developer shipped the fix, no code change was needed, or the fix was waiting for approval at hand-over.</p>
+    <ul class="rows">
+      <li><b>1,654 failed runs in a row</b><span>An automated pipeline that groups products created nothing for three weeks. Two queued products were still filed under a former brand, and one refusal cancelled each whole run. The fix shipped and I verified it live.</span></li>
+      <li><b>Uploads reported as missing</b><span>A reconciliation sheet listed fee reports as never uploaded. I matched each gap to its cause: some imports failed without a log entry but another upload covered the same month, and the rest were older than the data available to download. No data was lost.</span></li>
+      <li><b>Wrong-size AI recommendations</b><span>An AI recommender showed wrong-size products as confident top substitutes. I found three separate causes: a candidate cap, the ranking, and an auto-approve check. The fix also clears 1,620 stale scores.</span></li>
+      <li><b>A page that failed every load</b><span>A setup step failed all 162 loads in 9 days. The page packed every template ID into the request URL, which grew to about 24,600 characters until the server refused it.</span></li>
+      <li><b>Approved copy clients never saw</b><span>Approving an older version of a product title never made it the current one, and the client portal shows only current versions. I traced 33 affected versions and designed a repair with a backup.</span></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="more">
+    <h2 id="more">Other fixes I shipped, by app</h2>
+    <div class="apps">
+      <div class="app">
+        <h3>Operations hub</h3>
+        <ul>
+          <li>Reimbursement claims: case actions on every claim, a shipment column and a claim-type filter</li>
+          <li>Claim search missed records because a list was read unsorted; the shipments tab skipped or doubled lines</li>
+          <li>Record-link search showed "no results" for every term because the request was failing</li>
+          <li>Account health: a clear deactivation banner, and a warning before reassigning an untriaged alert</li>
+          <li>Compliance uploads: real error messages, several products and files per upload</li>
+        </ul>
+      </div>
+      <div class="app">
+        <h3>Research and content</h3>
+        <ul>
+          <li>Product type and category didn't save on the product page</li>
+          <li>Group pickers showed every live group, and Create saved the group's products</li>
+          <li>Sentiment records tab lists every record, with add-by-product</li>
+          <li>Long AI content runs split into timed rounds so they stop timing out</li>
+          <li>Review checks reworded so they apply to any brand, not one product category</li>
+        </ul>
+      </div>
+      <div class="app">
+        <h3>Sales analytics</h3>
+        <ul>
+          <li>Large report uploads timed out or ran out of memory; they now upload in smaller pieces</li>
+          <li>A "confirmed no data" state so an empty week doesn't look like a missing upload</li>
+          <li>An empty ads report is no longer refused as "wrong account"</li>
+          <li>Weekly search reports save the week's real end date</li>
+          <li>Upload coverage shows every active account</li>
+        </ul>
+      </div>
+      <div class="app">
+        <h3>Client portal</h3>
+        <ul>
+          <li>Profit and loss counts credits received outside Amazon</li>
+          <li>Customer loyalty trends read one storefront at a time</li>
+          <li>Content review stopped loading internal strategist notes</li>
+        </ul>
+      </div>
+      <div class="app">
+        <h3>Team workspace</h3>
+        <ul>
+          <li>Record numbers for every record type, annual reviews included</li>
+          <li>Continuous-improvement tabs that showed "saved" but never saved</li>
+          <li>Time tracking flagged finished entries as "Invalid status"</li>
+        </ul>
+      </div>
+      <div class="app">
+        <h3>Across all apps</h3>
+        <ul>
+          <li>Numbered every bug report and change request, in all six codebases</li>
+          <li>Created and last-updated dates now fill in automatically</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="gap-before" aria-labelledby="how">
+    <h2 id="how">How I work</h2>
+    <ul class="rows">
+      <li><b>Start from the number that looks wrong</b><span>I open the user's own record and reproduce exactly what they saw.</span></li>
+      <li><b>Prove it with data</b><span>Query results, request logs and row counts. If a cause can't explain every detail in the report, I keep looking.</span></li>
+      <li><b>Measure the reach</b><span>I count every record, page and report the same cause touches before deciding on the fix.</span></li>
+      <li><b>Compare before and after</b><span>I check old against new output in both directions before calling a change safe.</span></li>
+      <li><b>Test on all the data</b><span>An AI change gets tested on every saved output, not only the example in the ticket.</span></li>
+      <li><b>Write it up</b><span>Root-cause reports, daily status reports and a weekly report to my manager. At my manager's request, I shared my reporting routine with two teammates.</span></li>
+    </ul>
+  </section>
+
+  <section class="keep" aria-labelledby="skills">
+    <h2 id="skills">Tools and skills</h2>
+    <div class="skills">
+      <div class="skill-row"><p class="label">SQL</p><p>Postgres: joins, aggregates, time bucketing, reconciliation and data-quality checks, migrations</p></div>
+      <div class="skill-row"><p class="label">Data</p><p>Amazon seller data (sales and traffic, advertising bulk files, fees, inventory, reimbursements, multiple marketplaces) and application request logs</p></div>
+      <div class="skill-row"><p class="label">AI and LLMs</p><p>Evaluating model outputs against saved results, AI classification with structured output, Claude and Gemini pipelines</p></div>
+      <div class="skill-row"><p class="label">Tools</p><p>GitHub (pull requests, CI checks, reviewing AI-written changes, weekly change audits), Supabase, Claude Code, Lovable; reading TypeScript</p></div>
+      <div class="skill-row"><p class="label">Writing</p><p>Root-cause reports, technical and user specs, status reports</p></div>
+    </div>
+  </section>
+
+  <footer>
+    Company, client, brand and colleague names, internal IDs and business figures are left out to keep the company's work confidential. I'm happy to walk through any of these cases in more detail.
+  </footer>
+
+</div>
+
+</body>
+</html>
