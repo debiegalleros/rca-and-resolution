@@ -227,22 +227,71 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
   pre { font-size: 12.5px; padding: 12px; }
 }
 
-/* Wide screens (landscape laptops and monitors): use the width; running text keeps a readable measure */
+/* Wide screens (landscape laptops and monitors): smaller type, use the full width, put sections side by side */
 @media screen and (min-width: 1100px) {
-  .page { max-width: 1240px; gap: 72px; }
-  .lede { max-width: 78ch; }
-  #impact ~ .apps, section[aria-labelledby="impact"] .apps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  body { font-size: 15px; line-height: 1.5; }
+  .page { max-width: 1560px; gap: 48px; padding-block: 36px 56px;
+    padding-left: max(40px, env(safe-area-inset-left, 0px)); padding-right: max(40px, env(safe-area-inset-right, 0px)); }
+  .label { font-size: 11px; }
+
+  header { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; row-gap: 12px; }
+  header > * { grid-column: 1 / -1; }
+  header h1 { font-size: 54px; }
+  .role { font-size: 20px; max-width: none; }
+  header > .lede { grid-column: 1; grid-row: 5; max-width: none; }
+  header > .lede ~ .lede { grid-column: 2; grid-row: 5; }
+  header > .timeline-wrap { grid-row: 6; }
+  .timeline b { font-size: 14px; }
+  .timeline li > span:last-child { font-size: 13px; }
+
+  section { gap: 18px; }
+  section > h2 { font-size: 23px; }
+  .intro, figcaption { font-size: 13.5px; max-width: 120ch; }
+  .numbers b { font-size: 30px; }
+  .numbers span { font-size: 13.5px; }
+  .quote blockquote p { font-size: 18px; max-width: 100ch; }
+
+  section[aria-labelledby="impact"] .apps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   section[aria-labelledby="more"] .apps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .cases { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; }
-  .case { align-content: start; }
-  .case dl { grid-template-columns: 82px minmax(0, 1fr); }
+  .apps { gap: 22px 32px; }
+  .app h3 { font-size: 15.5px; }
+  .app ul { font-size: 14px; gap: 4px; }
+
+  .bars { padding: 16px 20px; gap: 7px; }
   .bar { grid-template-columns: minmax(0, 360px) minmax(0, 1fr) 2ch; }
-  .rows li { grid-template-columns: 320px minmax(0, 1fr); }
-  .rows span { max-width: 80ch; }
-  .skill-row { grid-template-columns: 200px minmax(0, 1fr); }
-  .snippets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bar-label { font-size: 13.5px; }
+
+  .cases { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .case { padding: 18px 20px; gap: 12px; align-content: start; }
+  .case h3 { font-size: 18px; }
+  .case dl { grid-template-columns: 78px minmax(0, 1fr); gap: 7px 16px; font-size: 14px; }
+  .case dt { font-size: 10.5px; }
+  .case .results { min-width: 0; font-size: 13px; }
+  .case .results th { font-size: 10px; letter-spacing: 0.03em; }
+  .case .results th, .case .results td { padding: 6px 8px; }
+
+  .rows { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 40px; }
+  .rows li { grid-template-columns: 200px minmax(0, 1fr); gap: 4px 20px; padding-block: 11px; }
+  .rows b { font-size: 14.5px; }
+  .rows span { font-size: 14px; }
+
+  .snippets { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
   .snippets .snippet:last-child { grid-column: 1 / -1; }
-  .quote blockquote p { max-width: 70ch; }
+  .snippet { padding: 18px 20px; gap: 10px; }
+  .snippet h3 { font-size: 17px; }
+  .snippet > p { font-size: 14px; max-width: none; }
+  pre { font-size: 12.5px; line-height: 1.5; padding: 12px 14px; }
+
+  .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 40px; }
+  .skill-row { grid-template-columns: 130px minmax(0, 1fr); padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+  .skill-row:last-child { border-bottom: 1px solid var(--rule); padding-bottom: 10px; }
+  .skill-row p { font-size: 14px; }
+  footer { font-size: 13px; max-width: none; }
+}
+
+/* Very wide screens: three case studies per row */
+@media screen and (min-width: 1440px) {
+  .cases { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @page { size: A4; margin: 14mm 14mm 16mm; }
