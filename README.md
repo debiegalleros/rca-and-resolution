@@ -1,2 +1,8 @@
-# debiegalleros.github.io
-Portfolio of Debie Galleros: data analytics and data science. Root-cause analyses, data quality checks and AI evaluation on production data.
+# Debie Galleros — Root-Cause Analytics
+
+Data analytics and data science portfolio, live at **https://debiegalleros.github.io/root-cause-analytics**.
+
+- `index.html` — the portfolio page
+- `Debie-Galleros-Root-Cause-Analytics.pdf` — the same content as a PDF
+
+Work examples are described without company, client or colleague names, and the code samples are rewritten, not copied from any employer.
