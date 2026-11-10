@@ -302,12 +302,12 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
         <li class="mine"><span class="when">May</span><b>I start on bugs</b><span>I handle the first bug reports from users as the apps go into first use.</span></li>
         <li class="mine"><span class="when">Jun</span><b>AI model retirements</b><span>Unprompted, I spot retirements on the provider's schedule and raise a fix early.</span></li>
         <li class="platform"><span class="when">Jul</span><b>First database migration</b><span>Airtable to Supabase. Database headers stop matching the screens, and fixes pile up.</span></li>
-        <li class="mine"><span class="when">Aug</span><b>Move to GitHub and Claude Code</b><span>From Lovable's AI editor to Claude Code and GitHub, for more reliable fixes and a documented record of every change.</span></li>
+        <li class="mine"><span class="when">Aug</span><b>Move to Claude Code and pull requests</b><span>Code already on GitHub. I switch from Lovable's AI editor to reviewed pull requests.</span></li>
         <li class="platform"><span class="when">Sep</span><b>Second migration starts</b><span>Still under way, so new bugs keep coming.</span></li>
         <li class="mine"><span class="when">Nov</span><b>612 tickets closed</b><span>Across all five apps, as the only person fixing bugs.</span></li>
       </ol>
     </div>
-    <p class="lede">Most cases started with a number that looked wrong. I traced it through SQL, request logs and the code that wrote it, measured how far it reached, and shipped the fix. Until July I made fixes through Lovable's AI editor. In August I moved to Claude Code and GitHub pull requests, which gave more reliable fixes and a documented, reviewable record of every change. Either way, I checked the AI's findings against the live database before anything went out.</p>
+    <p class="lede">Most cases started with a number that looked wrong. I traced it through SQL, request logs and the code that wrote it, measured how far it reached, and shipped the fix. All five apps' code lived on GitHub. Until July I made fixes through Lovable's AI editor. In August I moved to Claude Code and reviewed pull requests, which gave more reliable fixes and a documented, reviewable record of every change. Either way, I checked the AI's findings against the live database before anything went out.</p>
   </header>
 
   <div class="numbers" role="list">
@@ -663,6 +663,7 @@ const { data } = await supabase.from("orders").select("*");</code></pre>
       <li><b>Measure the reach</b><span>I count every record, page and report the same cause touches before deciding on the fix.</span></li>
       <li><b>Compare before and after</b><span>I check old against new output in both directions before calling a change safe.</span></li>
       <li><b>Test on all the data</b><span>An AI change gets tested on every saved output, not only the example in the ticket.</span></li>
+      <li><b>Ship it as a reviewed pull request</b><span>Each fix goes on its own branch with its spec update and deploy steps, passes the tests against the latest code, and is reviewed before merge. After merge I run the deploy steps and check the result live.</span></li>
       <li><b>Write it up</b><span>Root-cause reports, daily status reports and a weekly report to my manager. At my manager's request, I shared my reporting routine with two teammates.</span></li>
     </ul>
   </section>
