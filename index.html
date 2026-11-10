@@ -172,6 +172,28 @@ figcaption { font-size: 15px; color: var(--muted); max-width: 70ch; }
 .rows b { font-weight: 600; font-size: 17px; line-height: 1.4; }
 .rows span { min-width: 0; font-size: 16px; }
 
+/* How I work: numbered steps joined by a line; vertical by default, horizontal with arrows on wide screens */
+.flow { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+.flow li { position: relative; display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 14px; row-gap: 2px; align-content: start; break-inside: avoid; }
+.flow .step { grid-row: 1 / span 2; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: var(--bg);
+  display: grid; place-items: center; font-family: var(--mono); font-size: 13px; font-weight: 500; position: relative; z-index: 1; }
+.flow b { font-weight: 600; font-size: 16px; line-height: 1.35; }
+.flow .txt { grid-column: 2; color: var(--muted); font-size: 15px; }
+.flow li:not(:last-child)::after { content: ""; position: absolute; left: 13px; top: 30px; bottom: -14px; width: 2px; background: var(--rule); }
+
+/* More investigations: numbered */
+section[aria-labelledby="diag"] .rows { counter-reset: inv; }
+section[aria-labelledby="diag"] .rows li { counter-increment: inv; }
+section[aria-labelledby="diag"] .rows b::before {
+  content: counter(inv); display: inline-grid; place-items: center; width: 20px; height: 20px; margin-right: 8px; vertical-align: 1px;
+  border: 1.5px solid var(--accent); border-radius: 50%; color: var(--accent); font-family: var(--mono); font-size: 11px; font-weight: 500; }
+
+/* Tools and skills: one row of columns with tags */
+.skillset { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 18px; }
+.skill-col { display: grid; gap: 10px; align-content: start; padding-top: 10px; border-top: 3px solid var(--accent); min-width: 0; }
+.tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.tags li { background: var(--track); border: 1px solid var(--rule); border-radius: 4px; padding: 2px 9px; font-size: 14px; line-height: 1.45; color: var(--ink); }
+
 /* Code */
 .snippets { display: grid; gap: 28px; }
 .snippet {
@@ -274,8 +296,14 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
   .rows li { grid-template-columns: 200px minmax(0, 1fr); gap: 4px 20px; padding-block: 11px; }
   .rows b { font-size: 13.5px; }
   .rows span { font-size: 13px; }
-  section[aria-labelledby="how"] .rows { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  section[aria-labelledby="how"] .rows li { grid-template-columns: minmax(0, 1fr); gap: 3px; align-content: start; }
+  .flow { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0 22px; }
+  .flow li { grid-template-columns: minmax(0, 1fr); row-gap: 6px; }
+  .flow .step { grid-row: auto; }
+  .flow .txt { grid-column: 1; font-size: 12.5px; }
+  .flow b { font-size: 13.5px; }
+  .flow li:not(:last-child)::after { left: 36px; right: -16px; top: 13px; bottom: auto; width: auto; height: 2px; }
+  .flow li:not(:last-child)::before { content: ""; position: absolute; top: 8px; right: -20px; width: 0; height: 0;
+    border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 9px solid var(--muted); }
 
   .snippets { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   .snippet { padding: 18px 20px; gap: 10px; align-content: start; }
@@ -287,6 +315,8 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
   .skill-row { grid-template-columns: 130px minmax(0, 1fr); padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
   .skill-row:last-child { border-bottom: 1px solid var(--rule); padding-bottom: 10px; }
   .skill-row p { font-size: 13px; }
+  .skillset { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px; }
+  .tags li { font-size: 12.5px; }
   footer { font-size: 12px; max-width: none; }
 }
 
@@ -329,6 +359,17 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
   .app h3 { font-size: 14px; }
   section.keep { break-inside: avoid; }
   .gap-before { break-before: page; margin-top: 0; }
+  .flow { gap: 9px; }
+  .skillset { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+  .skill-col { gap: 6px; padding-top: 6px; border-top-width: 2px; }
+  .tags { gap: 3px; }
+  .tags li { font-size: 8pt; padding: 1px 5px; border-radius: 3px; }
+  .flow li { grid-template-columns: 18px minmax(0, 1fr); column-gap: 10px; }
+  .flow .step { width: 18px; height: 18px; font-size: 8.5pt; }
+  .flow b { font-size: 10.5pt; }
+  .flow .txt { font-size: 9.5pt; }
+  .flow li:not(:last-child)::after { left: 8px; top: 20px; bottom: -9px; }
+  section[aria-labelledby="diag"] .rows b::before { width: 14px; height: 14px; font-size: 7.5pt; margin-right: 6px; border-width: 1px; }
   .links .print-only { display: inline; }
   .space-top { margin-top: 26px; }
   .quote { padding-left: 16px; break-inside: avoid; }
@@ -727,25 +768,25 @@ const { data } = await supabase
 
   <section class="gap-before" aria-labelledby="how">
     <h2 id="how">How I work</h2>
-    <ul class="rows">
-      <li><b>Start from the number that looks wrong</b><span>I open the user's own record and reproduce exactly what they saw.</span></li>
-      <li><b>Prove it with data</b><span>Query results, request logs and row counts. If a cause can't explain every detail in the report, I keep looking.</span></li>
-      <li><b>Measure the reach</b><span>I count every record, page and report the same cause touches before deciding on the fix.</span></li>
-      <li><b>Compare before and after</b><span>I check old against new output in both directions before calling a change safe.</span></li>
-      <li><b>Test on all the data</b><span>An AI change gets tested on every saved output, not only the example in the ticket.</span></li>
-      <li><b>Ship it as a reviewed pull request</b><span>Each fix goes on its own branch with its spec update and deploy steps, passes the tests against the latest code, and is reviewed before merge. After merge I run the deploy steps and check the result live.</span></li>
-      <li><b>Write it up</b><span>Root-cause reports, daily status reports and a weekly report to my manager. At my manager's request, I shared my reporting routine with two teammates.</span></li>
-    </ul>
+    <ol class="flow">
+      <li><span class="step">1</span><b>Start from the number that looks wrong</b><span class="txt">I open the user's own record and reproduce exactly what they saw.</span></li>
+      <li><span class="step">2</span><b>Prove it with data</b><span class="txt">Query results, request logs and row counts. If a cause can't explain every detail in the report, I keep looking.</span></li>
+      <li><span class="step">3</span><b>Measure the reach</b><span class="txt">I count every record, page and report the same cause touches before deciding on the fix.</span></li>
+      <li><span class="step">4</span><b>Compare before and after</b><span class="txt">I check old against new output in both directions before calling a change safe.</span></li>
+      <li><span class="step">5</span><b>Test on all the data</b><span class="txt">An AI change gets tested on every saved output, not only the example in the ticket.</span></li>
+      <li><span class="step">6</span><b>Ship it as a reviewed pull request</b><span class="txt">Each fix goes on its own branch with its spec update and deploy steps, passes the tests against the latest code, and is reviewed before merge. After merge I run the deploy steps and check the result live.</span></li>
+      <li><span class="step">7</span><b>Write it up</b><span class="txt">Root-cause reports, daily status reports and a weekly report to my manager. At my manager's request, I shared my reporting routine with two teammates.</span></li>
+    </ol>
   </section>
 
   <section class="keep" aria-labelledby="skills">
     <h2 id="skills">Tools and skills</h2>
-    <div class="skills">
-      <div class="skill-row"><p class="label">SQL</p><p>Postgres: joins, aggregates, time bucketing, reconciliation and data-quality checks, migrations</p></div>
-      <div class="skill-row"><p class="label">Data</p><p>Amazon seller data (sales and traffic, advertising bulk files, fees, inventory, reimbursements, multiple marketplaces) and application request logs</p></div>
-      <div class="skill-row"><p class="label">AI and LLMs</p><p>Evaluating model outputs against saved results, AI classification with structured output, Claude and Gemini pipelines</p></div>
-      <div class="skill-row"><p class="label">Tools</p><p>GitHub (pull requests, CI checks, reviewing AI-written changes, weekly change audits), Supabase, Claude Code, Lovable; reading TypeScript</p></div>
-      <div class="skill-row"><p class="label">Writing</p><p>Root-cause reports, technical and user specs, status reports</p></div>
+    <div class="skillset">
+      <div class="skill-col"><p class="label">SQL</p><ul class="tags"><li>Postgres</li><li>Joins</li><li>Aggregates</li><li>Time bucketing</li><li>Reconciliation</li><li>Data-quality checks</li><li>Migrations</li></ul></div>
+      <div class="skill-col"><p class="label">Data</p><ul class="tags"><li>Amazon seller data</li><li>Sales and traffic</li><li>Advertising bulk files</li><li>Fees</li><li>Inventory</li><li>Reimbursements</li><li>Multiple marketplaces</li><li>Application request logs</li></ul></div>
+      <div class="skill-col"><p class="label">AI and LLMs</p><ul class="tags"><li>Evaluating model outputs</li><li>Testing on saved results</li><li>AI classification</li><li>Structured output</li><li>Claude</li><li>Gemini</li></ul></div>
+      <div class="skill-col"><p class="label">Tools</p><ul class="tags"><li>GitHub</li><li>Pull requests</li><li>CI checks</li><li>Reviewing AI-written code</li><li>Weekly change audits</li><li>Supabase</li><li>Claude Code</li><li>Lovable</li><li>Reading TypeScript</li></ul></div>
+      <div class="skill-col"><p class="label">Writing</p><ul class="tags"><li>Root-cause reports</li><li>Technical specs</li><li>User specs</li><li>Status reports</li></ul></div>
     </div>
   </section>
 
