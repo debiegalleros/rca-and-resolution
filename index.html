@@ -107,7 +107,7 @@ header h1 { font-size: clamp(44px, 8vw, 72px); font-weight: 700; line-height: 1;
   font-variant-numeric: tabular-nums; color: var(--accent);
 }
 .numbers span { font-size: 15px; color: var(--muted); line-height: 1.35; }
-.numbers.results { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 560px; min-width: 0; }
+.numbers.results { grid-template-columns: repeat(2, minmax(0, 1fr)); min-width: 0; }
 .hl { font-weight: 600; color: var(--accent); }
 .olabel { margin: 0 0 6px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 
@@ -223,6 +223,7 @@ pre .c { color: var(--muted); }
 .goal dt { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
 .goal dd { margin: 0; min-width: 0; }
 .impact-head { display: grid; gap: inherit; }
+.impact-head .intro { max-width: none; }
 section[aria-labelledby="impact"] .apps { row-gap: 10px; }
 section[aria-labelledby="impact"] .app { grid-row: span 3; grid-template-rows: subgrid; }
 section[aria-labelledby="impact"] .app ul { margin-bottom: 18px; align-content: start; }
