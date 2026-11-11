@@ -107,6 +107,8 @@ header h1 { font-size: clamp(44px, 8vw, 72px); font-weight: 700; line-height: 1;
   font-variant-numeric: tabular-nums; color: var(--accent);
 }
 .numbers span { font-size: 15px; color: var(--muted); line-height: 1.35; }
+.numbers.results { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 560px; min-width: 0; }
+.hl { font-weight: 600; color: var(--accent); }
 
 section { display: grid; gap: 24px; }
 section > h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; }
@@ -367,6 +369,9 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
   pre { white-space: pre-wrap; font-size: 8pt; line-height: 1.45; padding: 8px 10px; }
   .app h3 { font-size: 14px; }
   .goal { font-size: 8.5pt; padding: 6px 8px; gap: 2px 8px; }
+  .numbers.results div { padding-block: 8px; }
+  .numbers.results b { font-size: 20px; }
+  section[aria-labelledby="impact"] .app ul { margin-bottom: 8px; }
   .goal dt { font-size: 6.5pt; padding-top: 1px; }
   section.keep { break-inside: avoid; }
   .gap-before { break-before: page; margin-top: 0; }
@@ -411,7 +416,7 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
     <h1>Debie Galleros</h1>
     <p class="role">Bug bashing and root-cause analysis, UI and database fixes, data quality and AI&nbsp;evaluation</p>
     <p class="links"><a href="https://github.com/debiegalleros">github.com/debiegalleros</a><a href="Debie-Galleros-Root-Cause-Analysis-and-Resolution.pdf">PDF version</a><a class="print-only" href="https://debiegalleros.github.io/rca-and-resolution/">debiegalleros.github.io/rca-and-resolution</a></p>
-    <p class="lede">Since April 2026 I have worked on the data behind an Amazon brand agency's platform: sales and traffic reports, advertising data, inventory, reimbursements and AI-generated product content. It runs as five apps on one shared Postgres database. I didn't build these apps. From May I was the only person on the team fixing their bugs, full time: I found out why their numbers or features went wrong, submitted each fix to my manager for review, and shipped it once approved.</p>
+    <p class="lede">Since April 2026, I have worked on the data behind an Amazon brand agency's platform: sales and traffic reports, advertising data, inventory, reimbursements and AI-generated product content. It runs as five apps on one shared Postgres database. <strong class="hl">I didn't build these apps.</strong> From May, I was <strong class="hl">the only person on the team fixing their bugs</strong>, full time: I found out why their numbers or features went wrong, <strong class="hl">submitted each fix to my manager for review</strong>, and shipped it once approved.</p>
     <div class="timeline-wrap">
       <p class="label">Timeline, 2026 · <span class="key mine">my work</span> <span class="key platform">platform changes</span></p>
       <ol class="timeline">
@@ -425,7 +430,7 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
         <li class="mine"><span class="when">Nov</span><b>1,000+ tickets closed</b><span>Across all five apps, as the only person fixing bugs.</span></li>
       </ol>
     </div>
-    <p class="lede">Most cases started with a number that looked wrong. I traced it through SQL, request logs and the code that wrote it, measured how far it reached, and shipped the fix. All five apps' code lived on GitHub. Until July I made fixes through Lovable's AI editor. In August I moved to Claude Code and reviewed pull requests, which gave more reliable fixes and a documented, reviewable record of every change. Either way, I checked the AI's findings against the live database before anything went out.</p>
+    <p class="lede">Most cases started with <strong class="hl">a number that looked wrong</strong>. I traced it through <strong class="hl">SQL, request logs and the code that wrote it</strong>, measured how far it reached, and shipped the fix. All five apps' code lived on GitHub. Until July, I made fixes through Lovable's AI editor. In August, I moved to Claude Code and <strong class="hl">reviewed pull requests</strong>, which gave more reliable fixes and a documented, reviewable record of every change. Either way, <strong class="hl">I checked the AI's findings against the live database</strong> before anything went out.</p>
   </header>
 
   <div class="numbers" role="list">
@@ -442,7 +447,12 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
 
   <section class="keep" aria-labelledby="impact">
     <h2 id="impact">How it helped</h2>
-    <p class="intro">The platform is the agency's own software, which it also offers to other businesses. Clients read their results in it instead of on calls, so its numbers have to be right. For each group: the goal, how it is measured, and what my fixes changed. Business figures are left out for confidentiality.</p>
+    <p class="intro">The platform is the agency's own software, and the agency also offers it to other businesses. Its goal is <strong class="hl">more clients and more revenue</strong>: clients read their results in the apps instead of on calls, which frees the team to take on more accounts, and those results help sell the software. Client results the platform's owner has published:</p>
+    <div class="numbers results" role="list">
+      <div role="listitem"><b>88%</b><span>client sales growth, year over year</span></div>
+      <div role="listitem"><b>16 pts</b><span>swing in client profit since summer</span></div>
+    </div>
+    <p class="intro">Those results are only as good as the numbers in the apps, and <strong class="hl">keeping those numbers right was my job</strong>. Below, each group's goal, how it is measured, and what my fixes changed. Other business figures are left out for confidentiality.</p>
     <div class="apps">
       <div class="app">
         <h3>Clients</h3>
@@ -577,7 +587,7 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
           <dt>Problem</dt>
           <dd>Lists and totals came back incomplete with no error: groups missing members, report rows gone, claims missing from search.</dd>
           <dt>Analysis</dt>
-          <dd>I swept the database reads in all five apps for any that could return more than 1,000 rows. In the largest app that meant 158 server functions and 297 database function calls.</dd>
+          <dd>I swept the database reads in all five apps for any that could return more than 1,000 rows. In the largest app, that meant 158 server functions and 297 database function calls.</dd>
           <dt>Finding</dt>
           <dd>The database API returns at most 1,000 rows per request, and the code treated that as the whole list. Reads without a fixed sort order also overlapped between pages: in one claims list, about 1 in 5 items never appeared.</dd>
           <dt>Outcome</dt>
@@ -790,7 +800,7 @@ const { data } = await supabase
       <li><span class="step">3</span><b>Measure the reach</b><span class="txt">I count every record, page and report the same cause touches before deciding on the fix.</span></li>
       <li><span class="step">4</span><b>Compare before and after</b><span class="txt">I check old against new output in both directions before calling a change safe.</span></li>
       <li><span class="step">5</span><b>Test on all the data</b><span class="txt">An AI change gets tested on every saved output, not only the example in the ticket.</span></li>
-      <li><span class="step">6</span><b>Ship it as a reviewed pull request</b><span class="txt">Each fix goes on its own branch with its spec update and deploy steps, passes the tests against the latest code, and is reviewed before merge. After merge I run the deploy steps and check the result live.</span></li>
+      <li><span class="step">6</span><b>Ship it as a reviewed pull request</b><span class="txt">Each fix goes on its own branch with its spec update and deploy steps, passes the tests against the latest code, and is reviewed before merge. After merge, I run the deploy steps and check the result live.</span></li>
       <li><span class="step">7</span><b>Write it up</b><span class="txt">Root-cause reports, daily status reports and a weekly report to my manager. At my manager's request, I shared my reporting routine with two teammates.</span></li>
     </ol>
   </section>
@@ -807,7 +817,7 @@ const { data } = await supabase
   </section>
 
   <footer>
-    Company, client, brand and colleague names, internal IDs and business figures are left out to keep the company's work confidential. I'm happy to walk through any of these cases in more detail.
+    Company, client, brand and colleague names, internal IDs and private business figures are left out to keep the company's work confidential. I'm happy to walk through any of these cases in more detail.
   </footer>
 
 </div>
