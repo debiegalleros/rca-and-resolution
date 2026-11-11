@@ -222,6 +222,7 @@ pre .c { color: var(--muted); }
 .goal { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 10px; padding: 10px 12px; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; font-size: 15px; line-height: 1.4; }
 .goal dt { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
 .goal dd { margin: 0; min-width: 0; }
+.impact-head { display: grid; gap: inherit; }
 section[aria-labelledby="impact"] .apps { row-gap: 10px; }
 section[aria-labelledby="impact"] .app { grid-row: span 3; grid-template-rows: subgrid; }
 section[aria-labelledby="impact"] .app ul { margin-bottom: 18px; align-content: start; }
@@ -272,6 +273,9 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
   .role { font-size: 18px; max-width: none; }
   header > .lede { grid-column: 1; grid-row: 5; max-width: none; }
   header > .lede ~ .lede { grid-column: 2; grid-row: 5; }
+  .impact-head { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; align-items: center; }
+  .impact-head .intro { grid-column: 1; max-width: none; }
+  .impact-head .numbers.results { grid-column: 2; grid-row: 1 / span 2; max-width: none; }
   header > .timeline-wrap { grid-row: 6; }
   .timeline b { font-size: 13px; }
   .timeline li > span:last-child { font-size: 12px; }
@@ -451,12 +455,14 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
 
   <section class="keep" aria-labelledby="impact">
     <h2 id="impact">How it helped</h2>
+    <div class="impact-head">
     <p class="intro">The platform is the agency's own software, and the agency also offers it to other businesses. <strong class="hl">Its goal is more clients and more revenue</strong>: clients read their results in the apps instead of on calls, which frees the team to take on more accounts, and those results help sell the software. Client results the platform's owner has published:</p>
     <div class="numbers results" role="list">
       <div role="listitem"><b>88%</b><span>client sales growth, year over year</span></div>
       <div role="listitem"><b>16 pts</b><span>swing in client profit since summer</span></div>
     </div>
     <p class="intro">Those results are only as good as the numbers in the apps, and <strong class="hl">keeping those numbers right was my job</strong>. Below, each group's goal, how it is measured, and the outcome achieved. Other business figures are left out for confidentiality.</p>
+    </div>
     <div class="apps">
       <div class="app">
         <h3>Clients</h3>
