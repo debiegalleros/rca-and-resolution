@@ -216,6 +216,13 @@ pre .c { color: var(--muted); }
 .app h3 { font-size: 18px; font-weight: 700; padding-bottom: 8px; border-bottom: 2px solid var(--accent); }
 .app ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 16px; }
 .app li::marker { color: var(--muted); }
+.goal { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 10px; padding: 10px 12px; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; font-size: 15px; line-height: 1.4; }
+.goal dt { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+.goal dd { margin: 0; min-width: 0; }
+section[aria-labelledby="impact"] .apps { row-gap: 10px; }
+section[aria-labelledby="impact"] .app { grid-row: span 3; grid-template-rows: subgrid; }
+section[aria-labelledby="impact"] .app ul { margin-bottom: 18px; align-content: start; }
+section[aria-labelledby="impact"] .goal { align-content: start; }
 
 /* Skills */
 .skills { display: grid; gap: 14px; }
@@ -278,6 +285,8 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
   .apps { gap: 22px 32px; }
   .app h3 { font-size: 14px; }
   .app ul { font-size: 13px; gap: 4px; }
+  .goal { font-size: 12.5px; padding: 8px 10px; }
+  .goal dt { font-size: 9.5px; padding-top: 2px; }
 
   .bars { padding: 16px 20px; gap: 7px; }
   .bar { grid-template-columns: minmax(0, 360px) minmax(0, 1fr) 2ch; }
@@ -357,6 +366,8 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
   .snippet h3 { font-size: 15px; }
   pre { white-space: pre-wrap; font-size: 8pt; line-height: 1.45; padding: 8px 10px; }
   .app h3 { font-size: 14px; }
+  .goal { font-size: 8.5pt; padding: 6px 8px; gap: 2px 8px; }
+  .goal dt { font-size: 6.5pt; padding-top: 1px; }
   section.keep { break-inside: avoid; }
   .gap-before { break-before: page; margin-top: 0; }
   .flow { gap: 9px; }
@@ -404,7 +415,7 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
     <div class="timeline-wrap">
       <p class="label">Timeline, 2026 · <span class="key mine">my work</span> <span class="key platform">platform changes</span></p>
       <ol class="timeline">
-        <li class="platform"><span class="when">Mar – May</span><b>The apps are built</b><span>Another team builds the five apps.</span></li>
+        <li class="platform"><span class="when">Mar – May</span><b>The apps are built</b><span>The lead developer builds the five apps.</span></li>
         <li class="mine"><span class="when">Apr</span><b>I start helping with bugs</b><span>No tickets yet. Users bring me bugs in direct messages.</span></li>
         <li class="mine"><span class="when">May</span><b>Full time on bugs</b><span>Bug tickets start as the apps go into first use, and fixing them becomes my full-time job.</span></li>
         <li class="mine"><span class="when">Jun</span><b>AI model retirements</b><span>Unprompted, I spot retirements on the provider's schedule and raise a fix early.</span></li>
@@ -431,10 +442,11 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
 
   <section class="keep" aria-labelledby="impact">
     <h2 id="impact">How it helped</h2>
-    <p class="intro">What changed for the company and its clients. Business figures are left out for confidentiality.</p>
+    <p class="intro">The platform is the agency's own software, which it also offers to other businesses. Clients read their results in it instead of on calls, so its numbers have to be right. For each group: the goal, how it is measured, and what my fixes changed. Business figures are left out for confidentiality.</p>
     <div class="apps">
       <div class="app">
         <h3>Clients</h3>
+        <dl class="goal"><dt>Goal</dt><dd>Grow sales and profit, and see the results in the apps without needing a call</dd><dt>Measure</dt><dd>Sales year over year, and profit margin in percentage points</dd></dl>
         <ul>
           <li>Profit and loss in the client portal counts credits received outside Amazon</li>
           <li>Brands selling in the US, Canada and Mexico see each country's own numbers</li>
@@ -443,6 +455,7 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
       </div>
       <div class="app">
         <h3>Operations and analytics teams</h3>
+        <dl class="goal"><dt>Goal</dt><dd>Work from complete data, without manual uploads or their own spreadsheets</dd><dt>Measure</dt><dd>Reports uploaded by hand, outages, and rows missing or misfiled</dd></dl>
         <ul>
           <li>Agents no longer upload reports by hand or keep their own Excel sheets, which saves time and money and keeps the system up to date</li>
           <li>Lists and totals are complete, or show an error, in all five apps</li>
@@ -453,6 +466,7 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
       </div>
       <div class="app">
         <h3>AI features</h3>
+        <dl class="goal"><dt>Goal</dt><dd>Product content and research that keep running as AI models change</dd><dt>Measure</dt><dd>Runs that finish, and failed outputs the AI reviewer catches</dd></dl>
         <ul>
           <li>Two June model retirements raised for a fix before the retirement date</li>
           <li>The next retirement forecast in June and handled three weeks early, before anything broke</li>
@@ -463,6 +477,7 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
       </div>
       <div class="app">
         <h3>Management</h3>
+        <dl class="goal"><dt>Goal</dt><dd>Every app's bugs fixed, with each fix reviewed before release</dd><dt>Measure</dt><dd>Tickets closed, and fixes merged each week</dd></dl>
         <ul>
           <li>Bug fixing for all five apps covered by one person, with every fix reviewed before release</li>
           <li>A weekly fix count with its undercount found and corrected</li>
