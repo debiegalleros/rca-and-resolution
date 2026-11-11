@@ -109,6 +109,7 @@ header h1 { font-size: clamp(44px, 8vw, 72px); font-weight: 700; line-height: 1;
 .numbers span { font-size: 15px; color: var(--muted); line-height: 1.35; }
 .numbers.results { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 560px; min-width: 0; }
 .hl { font-weight: 600; color: var(--accent); }
+.olabel { margin: 0 0 6px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 
 section { display: grid; gap: 24px; }
 section > h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; }
@@ -289,6 +290,7 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
   .app ul { font-size: 13px; gap: 4px; }
   .goal { font-size: 12.5px; padding: 8px 10px; }
   .goal dt { font-size: 9.5px; padding-top: 2px; }
+  .olabel { font-size: 9.5px; margin-bottom: 4px; }
 
   .bars { padding: 16px 20px; gap: 7px; }
   .bar { grid-template-columns: minmax(0, 360px) minmax(0, 1fr) 2ch; }
@@ -373,6 +375,8 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
   .numbers.results b { font-size: 20px; }
   section[aria-labelledby="impact"] .app ul { margin-bottom: 8px; }
   .goal dt { font-size: 6.5pt; padding-top: 1px; }
+  .olabel { font-size: 6.5pt; margin-bottom: 3px; }
+  section[aria-labelledby="impact"] .intro { max-width: none; }
   section.keep { break-inside: avoid; }
   .gap-before { break-before: page; margin-top: 0; }
   .flow { gap: 9px; }
@@ -416,7 +420,7 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
     <h1>Debie Galleros</h1>
     <p class="role">Bug bashing and root-cause analysis, UI and database fixes, data quality and AI&nbsp;evaluation</p>
     <p class="links"><a href="https://github.com/debiegalleros">github.com/debiegalleros</a><a href="Debie-Galleros-Root-Cause-Analysis-and-Resolution.pdf">PDF version</a><a class="print-only" href="https://debiegalleros.github.io/rca-and-resolution/">debiegalleros.github.io/rca-and-resolution</a></p>
-    <p class="lede">Since April 2026, I have worked on the data behind an Amazon brand agency's platform: sales and traffic reports, advertising data, inventory, reimbursements and AI-generated product content. It runs as five apps on one shared Postgres database. <strong class="hl">I didn't build these apps.</strong> From May, I was <strong class="hl">the only person on the team fixing their bugs</strong>, full time: I found out why their numbers or features went wrong, <strong class="hl">submitted each fix to my manager for review</strong>, and shipped it once approved.</p>
+    <p class="lede">Since April 2026, I have worked on <strong class="hl">the data behind an Amazon brand agency's platform</strong>: sales and traffic reports, advertising data, inventory, reimbursements and AI-generated product content. It runs as five apps on one shared Postgres database. I didn't build these apps. From May, I was the only person on the team fixing their bugs, full time: I <strong class="hl">found out why their numbers or features went wrong</strong>, submitted each fix to my manager for review, and shipped it once approved.</p>
     <div class="timeline-wrap">
       <p class="label">Timeline, 2026 · <span class="key mine">my work</span> <span class="key platform">platform changes</span></p>
       <ol class="timeline">
@@ -430,7 +434,7 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
         <li class="mine"><span class="when">Nov</span><b>1,000+ tickets closed</b><span>Across all five apps, as the only person fixing bugs.</span></li>
       </ol>
     </div>
-    <p class="lede">Most cases started with <strong class="hl">a number that looked wrong</strong>. I traced it through <strong class="hl">SQL, request logs and the code that wrote it</strong>, measured how far it reached, and shipped the fix. All five apps' code lived on GitHub. Until July, I made fixes through Lovable's AI editor. In August, I moved to Claude Code and <strong class="hl">reviewed pull requests</strong>, which gave more reliable fixes and a documented, reviewable record of every change. Either way, <strong class="hl">I checked the AI's findings against the live database</strong> before anything went out.</p>
+    <p class="lede">Most cases started with a number that looked wrong. I traced it through SQL, request logs and the code that wrote it, measured how far it reached, and shipped the fix. All five apps' code lived on GitHub. Until July, I made fixes through Lovable's AI editor. In August, I moved to Claude Code and reviewed pull requests, which gave <strong class="hl">more reliable fixes and a documented, reviewable record of every change</strong>. Either way, I checked the AI's findings against the live database before anything went out.</p>
   </header>
 
   <div class="numbers" role="list">
@@ -447,52 +451,57 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
 
   <section class="keep" aria-labelledby="impact">
     <h2 id="impact">How it helped</h2>
-    <p class="intro">The platform is the agency's own software, and the agency also offers it to other businesses. Its goal is <strong class="hl">more clients and more revenue</strong>: clients read their results in the apps instead of on calls, which frees the team to take on more accounts, and those results help sell the software. Client results the platform's owner has published:</p>
+    <p class="intro">The platform is the agency's own software, and the agency also offers it to other businesses. <strong class="hl">Its goal is more clients and more revenue</strong>: clients read their results in the apps instead of on calls, which frees the team to take on more accounts, and those results help sell the software. Client results the platform's owner has published:</p>
     <div class="numbers results" role="list">
       <div role="listitem"><b>88%</b><span>client sales growth, year over year</span></div>
       <div role="listitem"><b>16 pts</b><span>swing in client profit since summer</span></div>
     </div>
-    <p class="intro">Those results are only as good as the numbers in the apps, and <strong class="hl">keeping those numbers right was my job</strong>. Below, each group's goal, how it is measured, and what my fixes changed. Other business figures are left out for confidentiality.</p>
+    <p class="intro">Those results are only as good as the numbers in the apps, and <strong class="hl">keeping those numbers right was my job</strong>. Below, each group's goal, how it is measured, and the outcome achieved. Other business figures are left out for confidentiality.</p>
     <div class="apps">
       <div class="app">
         <h3>Clients</h3>
         <dl class="goal"><dt>Goal</dt><dd>Grow sales and profit, and see the results in the apps without needing a call</dd><dt>Measure</dt><dd>Sales year over year, and profit margin in percentage points</dd></dl>
+        <div class="outcome"><p class="olabel">Outcome achieved</p>
         <ul>
           <li>Profit and loss in the client portal counts credits received outside Amazon</li>
           <li>Brands selling in the US, Canada and Mexico see each country's own numbers</li>
           <li>Customer loyalty trends read one storefront at a time</li>
-        </ul>
+        </ul></div>
       </div>
       <div class="app">
         <h3>Operations and analytics teams</h3>
         <dl class="goal"><dt>Goal</dt><dd>Work from complete data, without manual uploads or their own spreadsheets</dd><dt>Measure</dt><dd>Reports uploaded by hand, outages, and rows missing or misfiled</dd></dl>
+        <div class="outcome"><p class="olabel">Outcome achieved</p>
         <ul>
           <li>Agents no longer upload reports by hand or keep their own Excel sheets, which saves time and money and keeps the system up to date</li>
           <li>Lists and totals are complete, or show an error, in all five apps</li>
           <li>The cause of 37 outages in 12 days is fixed</li>
           <li>Wrong-account ad uploads are blocked, and 120,238 misfiled rows were kept with zero loss</li>
           <li>Every reimbursement claim can be found, with case actions and a claim-type filter</li>
-        </ul>
+        </ul></div>
       </div>
       <div class="app">
         <h3>AI features</h3>
         <dl class="goal"><dt>Goal</dt><dd>Product content and research that keep running as AI models change</dd><dt>Measure</dt><dd>Runs that finish, and failed outputs the AI reviewer catches</dd></dl>
+        <div class="outcome"><p class="olabel">Outcome achieved</p>
         <ul>
           <li>Two June model retirements raised for a fix before the retirement date</li>
           <li>The next retirement forecast in June and handled three weeks early, before anything broke</li>
           <li>Video generation working again after Google retired its model</li>
           <li>The AI reviewer re-runs fails its own notes contradict; 630 had been missed</li>
           <li>Finished research results stay visible when the AI provider refuses calls</li>
-        </ul>
+        </ul></div>
       </div>
       <div class="app">
         <h3>Management</h3>
         <dl class="goal"><dt>Goal</dt><dd>Every app's bugs fixed, with each fix reviewed before release</dd><dt>Measure</dt><dd>Tickets closed, and fixes merged each week</dd></dl>
+        <div class="outcome"><p class="olabel">Outcome achieved</p>
         <ul>
+          <li>1,000+ tickets closed since April, and 149 fixes merged since Aug 6</li>
           <li>Bug fixing for all five apps covered by one person, with every fix reviewed before release</li>
           <li>A weekly fix count with its undercount found and corrected</li>
           <li>Daily status reports and a weekly report on every ticket</li>
-        </ul>
+        </ul></div>
       </div>
     </div>
   </section>
