@@ -84,7 +84,7 @@ header h1 { font-size: clamp(44px, 8vw, 72px); font-weight: 700; line-height: 1;
 .key::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin: 0 6px 0 10px; vertical-align: 0; }
 .key.mine::before { background: var(--accent); }
 .key.platform::before { background: var(--other); }
-.timeline { list-style: none; margin: 0; padding: 0; position: relative; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 14px; }
+.timeline { list-style: none; margin: 0; padding: 0; position: relative; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 14px; }
 .timeline::before { content: ""; position: absolute; top: 5px; left: 0; right: 0; height: 2px; background: var(--rule); }
 .timeline li { position: relative; padding-top: 22px; display: grid; gap: 3px; align-content: start; min-width: 0; }
 .timeline li::before { content: ""; position: absolute; top: 0; left: 0; width: 12px; height: 12px; border-radius: 50%; background: var(--other); box-shadow: 0 0 0 3px var(--surface); }
@@ -400,24 +400,25 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
     <h1>Debie Galleros</h1>
     <p class="role">Bug bashing and root-cause analysis, UI and database fixes, data quality and AI&nbsp;evaluation</p>
     <p class="links"><a href="https://github.com/debiegalleros">github.com/debiegalleros</a><a href="Debie-Galleros-Root-Cause-Analysis-and-Resolution.pdf">PDF version</a><a class="print-only" href="https://debiegalleros.github.io/rca-and-resolution/">debiegalleros.github.io/rca-and-resolution</a></p>
-    <p class="lede">Since May 2026 I have worked on the data behind an Amazon brand agency's platform: sales and traffic reports, advertising data, inventory, reimbursements and AI-generated product content. It runs as five apps on one shared Postgres database. I didn't build these apps. I was the only person on the team fixing their bugs: I found out why their numbers or features went wrong, submitted each fix to my manager for review, and shipped it once approved.</p>
+    <p class="lede">Since April 2026 I have worked on the data behind an Amazon brand agency's platform: sales and traffic reports, advertising data, inventory, reimbursements and AI-generated product content. It runs as five apps on one shared Postgres database. I didn't build these apps. From May I was the only person on the team fixing their bugs, full time: I found out why their numbers or features went wrong, submitted each fix to my manager for review, and shipped it once approved.</p>
     <div class="timeline-wrap">
       <p class="label">Timeline, 2026 · <span class="key mine">my work</span> <span class="key platform">platform changes</span></p>
       <ol class="timeline">
         <li class="platform"><span class="when">Mar – May</span><b>The apps are built</b><span>Another team builds the five apps.</span></li>
-        <li class="mine"><span class="when">May</span><b>I start on bugs</b><span>I handle the first bug reports from users as the apps go into first use.</span></li>
+        <li class="mine"><span class="when">Apr</span><b>I start helping with bugs</b><span>No tickets yet. Users bring me bugs in direct messages.</span></li>
+        <li class="mine"><span class="when">May</span><b>Full time on bugs</b><span>Bug tickets start as the apps go into first use, and fixing them becomes my full-time job.</span></li>
         <li class="mine"><span class="when">Jun</span><b>AI model retirements</b><span>Unprompted, I spot retirements on the provider's schedule and raise a fix early.</span></li>
         <li class="platform"><span class="when">Jul</span><b>First database migration</b><span>Airtable to Supabase. Database headers stop matching the screens, and fixes pile up.</span></li>
         <li class="mine"><span class="when">Aug</span><b>Move to Claude Code and pull requests</b><span>Code already on GitHub. I switch from Lovable's AI editor to reviewed pull requests.</span></li>
         <li class="platform"><span class="when">Sep</span><b>Second migration starts</b><span>Still under way, so new bugs keep coming.</span></li>
-        <li class="mine"><span class="when">Nov</span><b>612 tickets closed</b><span>Across all five apps, as the only person fixing bugs.</span></li>
+        <li class="mine"><span class="when">Nov</span><b>1,000+ tickets closed</b><span>Across all five apps, as the only person fixing bugs.</span></li>
       </ol>
     </div>
     <p class="lede">Most cases started with a number that looked wrong. I traced it through SQL, request logs and the code that wrote it, measured how far it reached, and shipped the fix. All five apps' code lived on GitHub. Until July I made fixes through Lovable's AI editor. In August I moved to Claude Code and reviewed pull requests, which gave more reliable fixes and a documented, reviewable record of every change. Either way, I checked the AI's findings against the live database before anything went out.</p>
   </header>
 
   <div class="numbers" role="list">
-    <div role="listitem"><b>612</b><span>tickets closed since May</span></div>
+    <div role="listitem"><b>1,000+</b><span>tickets closed since May</span></div>
     <div role="listitem"><b>149</b><span>fixes merged, of 171 pull requests since Aug 6</span></div>
     <div role="listitem"><b>1,848</b><span>failed requests traced to one setting</span></div>
     <div role="listitem"><b>2,741</b><span>labelled AI review notes I tested one fix on</span></div>
@@ -425,7 +426,7 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
 
   <figure class="quote">
     <blockquote><p>"Really impressed with your deep-diving the state of the API source from Anthropic. You are using a higher level of strategic analysis now that you've been in the trenches. I am convinced that once you are able to take a breather from tactical operations, you will have insights that will allow you to make great contributions to our software strategy."</p></blockquote>
-    <figcaption>My manager, Jun 20, in my second month of bug fixing, replying to my own analysis of Anthropic's model retirements, which no bug report had asked for</figcaption>
+    <figcaption>My manager, Jun 20, in my second month of full-time bug fixing, replying to my own analysis of Anthropic's model retirements, which no bug report had asked for</figcaption>
   </figure>
 
   <section class="keep" aria-labelledby="impact">
