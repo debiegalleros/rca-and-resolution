@@ -107,7 +107,8 @@ header h1 { font-size: clamp(44px, 8vw, 72px); font-weight: 700; line-height: 1;
   font-variant-numeric: tabular-nums; color: var(--accent);
 }
 .numbers span { font-size: 15px; color: var(--muted); line-height: 1.35; }
-.numbers.results { grid-template-columns: repeat(2, minmax(0, 1fr)); min-width: 0; }
+.numbers.results { grid-template-columns: repeat(2, minmax(0, 1fr)); min-width: 0; gap: 12px; border: 0; margin-block: 16px; }
+.numbers.results div { padding: 16px 12px; justify-items: center; text-align: center; border: 1px solid var(--rule); border-top: 3px solid var(--accent); border-radius: 6px; }
 .hl { font-weight: 600; color: var(--accent); }
 .olabel { margin: 0 0 6px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 
@@ -264,68 +265,65 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
 /* Wide screens (landscape laptops and monitors): smaller type, use the full width, put sections side by side */
 @media screen and (min-width: 1100px) {
   body { font-size: 14px; line-height: 1.5; }
-  .page { max-width: 1560px; gap: 48px; padding-block: 36px 56px;
+  .page { max-width: 1560px; gap: 64px; padding-block: 36px 56px;
     padding-left: max(40px, env(safe-area-inset-left, 0px)); padding-right: max(40px, env(safe-area-inset-right, 0px)); }
   .label { font-size: 10.5px; }
 
-  header { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; row-gap: 12px; }
-  header > * { grid-column: 1 / -1; }
+  header { row-gap: 16px; }
+  .lede { line-height: 1.6; }
   header h1 { font-size: 46px; }
   .role { font-size: 18px; max-width: none; }
-  header > .lede { grid-column: 1; grid-row: 5; max-width: none; }
-  header > .lede ~ .lede { grid-column: 2; grid-row: 5; }
-  .impact-head { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; align-items: start; }
-  .impact-head .intro { grid-column: 1; grid-row: 1; max-width: none; }
-  .impact-head .intro ~ .intro { grid-column: 2; grid-row: 1 / span 2; }
-  .impact-head .numbers.results { grid-column: 1; grid-row: 2; max-width: none; }
-  header > .timeline-wrap { grid-row: 6; }
+  header > .lede { max-width: none; }
+  header > .lede ~ .lede { grid-row: 6; }
+  .impact-head .numbers.results { justify-self: center; width: min(100%, 640px); }
+  header > .timeline-wrap { grid-row: 7; margin-top: 8px; }
   .timeline b { font-size: 13px; }
   .timeline li > span:last-child { font-size: 12px; }
 
-  section { gap: 18px; }
+  section { gap: 24px; }
   section > h2 { font-size: 20px; }
-  .intro, figcaption { font-size: 12.5px; max-width: 120ch; }
+  .intro, figcaption { font-size: 12.5px; max-width: 120ch; line-height: 1.65; }
   .numbers b { font-size: 26px; }
   .numbers span { font-size: 12.5px; }
   .quote blockquote p { font-size: 16px; max-width: 110ch; }
 
   section[aria-labelledby="impact"] .apps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   section[aria-labelledby="more"] .apps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .apps { gap: 22px 32px; }
+  .apps { gap: 28px 40px; }
   .app h3 { font-size: 14px; }
-  .app ul { font-size: 13px; gap: 4px; }
-  .goal { font-size: 12.5px; padding: 8px 10px; }
+  .app ul { font-size: 13px; gap: 10px; line-height: 1.5; }
+  .goal { font-size: 12.5px; padding: 12px 14px; gap: 8px 12px; line-height: 1.5; }
   .goal dt { font-size: 9.5px; padding-top: 2px; }
-  .olabel { font-size: 9.5px; margin-bottom: 4px; }
+  .olabel { font-size: 9.5px; margin-bottom: 10px; }
 
-  .bars { padding: 16px 20px; gap: 7px; }
+  .bars { padding: 22px 24px; gap: 12px; }
   .bar { grid-template-columns: minmax(0, 360px) minmax(0, 1fr) 2ch; }
   .bar-label { font-size: 12.5px; }
 
-  .cases { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-  .case { padding: 18px 20px; gap: 12px; align-content: start; }
+  .cases { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .case { padding: 24px 26px; gap: 16px; align-content: start; }
   .case h3 { font-size: 16px; }
-  .case dl { grid-template-columns: 68px minmax(0, 1fr); gap: 6px 12px; font-size: 13px; }
+  .case dl { grid-template-columns: 68px minmax(0, 1fr); gap: 12px 16px; font-size: 13px; line-height: 1.55; }
   .case dt { font-size: 10px; }
   .case .results { min-width: 0; font-size: 12px; }
   .case .results th { font-size: 10px; letter-spacing: 0.03em; }
   .case .results th, .case .results td { padding: 6px 8px; }
 
-  .rows { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 40px; }
-  .rows li { grid-template-columns: 200px minmax(0, 1fr); gap: 4px 20px; padding-block: 11px; }
+  .rows { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 56px; }
+  .rows li { grid-template-columns: 200px minmax(0, 1fr); gap: 6px 24px; padding-block: 16px; }
   .rows b { font-size: 13.5px; }
-  .rows span { font-size: 13px; }
+  .rows span { font-size: 13px; line-height: 1.55; }
   .flow { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0 22px; }
   .flow li { grid-template-columns: minmax(0, 1fr); row-gap: 6px; }
   .flow .step { grid-row: auto; }
-  .flow .txt { grid-column: 1; font-size: 12.5px; }
+  .flow .txt { grid-column: 1; font-size: 12.5px; line-height: 1.55; }
   .flow b { font-size: 13.5px; }
   .flow li:not(:last-child)::after { left: 36px; right: -16px; top: 13px; bottom: auto; width: auto; height: 2px; }
   .flow li:not(:last-child)::before { content: ""; position: absolute; top: 8px; right: -20px; width: 0; height: 0;
     border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 9px solid var(--muted); }
 
-  .snippets { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-  .snippet { padding: 18px 20px; gap: 10px; align-content: start; }
+  .snippets { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .snippet { padding: 24px 26px; gap: 14px; align-content: start; }
   .snippet h3 { font-size: 15px; }
   .snippet > p { font-size: 13px; max-width: none; }
   pre { font-size: 11.5px; line-height: 1.5; padding: 12px 14px; white-space: pre-wrap; overflow-wrap: anywhere; }
@@ -334,9 +332,17 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
   .skill-row { grid-template-columns: 130px minmax(0, 1fr); padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
   .skill-row:last-child { border-bottom: 1px solid var(--rule); padding-bottom: 10px; }
   .skill-row p { font-size: 13px; }
-  .skillset { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px; }
+  .skillset { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 28px; }
+  .skill-col { gap: 12px; }
+  .tags { gap: 8px; }
   .tags li { font-size: 12.5px; }
   footer { font-size: 12px; max-width: none; }
+
+  /* How it helped */
+  section[aria-labelledby="impact"] { gap: 28px; }
+  section[aria-labelledby="impact"] .apps { row-gap: 16px; }
+  .app h3 { padding-bottom: 10px; }
+  section[aria-labelledby="impact"] .app ul { margin-bottom: 0; }
 }
 
 @page { size: A4; margin: 14mm 14mm 16mm; }
@@ -377,6 +383,7 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
   pre { white-space: pre-wrap; font-size: 8pt; line-height: 1.45; padding: 8px 10px; }
   .app h3 { font-size: 14px; }
   .goal { font-size: 8.5pt; padding: 6px 8px; gap: 2px 8px; }
+  .numbers.results { margin-block: 8px; }
   .numbers.results div { padding-block: 8px; }
   .numbers.results b { font-size: 20px; }
   section[aria-labelledby="impact"] .app ul { margin-bottom: 8px; }
