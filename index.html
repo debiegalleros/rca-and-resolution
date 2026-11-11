@@ -274,9 +274,10 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 14px; 
   .role { font-size: 18px; max-width: none; }
   header > .lede { grid-column: 1; grid-row: 5; max-width: none; }
   header > .lede ~ .lede { grid-column: 2; grid-row: 5; }
-  .impact-head { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; align-items: center; }
-  .impact-head .intro { grid-column: 1; max-width: none; }
-  .impact-head .numbers.results { grid-column: 2; grid-row: 1 / span 2; max-width: none; }
+  .impact-head { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; align-items: start; }
+  .impact-head .intro { grid-column: 1; grid-row: 1; max-width: none; }
+  .impact-head .intro ~ .intro { grid-column: 2; grid-row: 1 / span 2; }
+  .impact-head .numbers.results { grid-column: 1; grid-row: 2; max-width: none; }
   header > .timeline-wrap { grid-row: 6; }
   .timeline b { font-size: 13px; }
   .timeline li > span:last-child { font-size: 12px; }
